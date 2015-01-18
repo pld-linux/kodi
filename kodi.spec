@@ -153,16 +153,29 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
+%{__rm} -r $RPM_BUILD_ROOT%{_docdir}/%{name}
+
+# no -devel package yet
+%{__rm} -r $RPM_BUILD_ROOT%{_includedir}/kodi
+%{__rm} -r $RPM_BUILD_ROOT%{_includedir}/xbmc
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/*
+%doc README.md docs/README.linux
+%attr(755,root,root) %{_bindir}/kodi
+%attr(755,root,root) %{_bindir}/kodi-standalone
 %{_datadir}/%{name}
 %attr(755,root,root) %{_libdir}/%{name}
-%{_docdir}/%{name}
-%{_desktopdir}/%{name}.desktop
-%{_iconsdir}/hicolor/256x256/apps/%{name}.png
-%{_iconsdir}/hicolor/48x48/apps/%{name}.png
-%{_datadir}/xsessions/XBMC.desktop
+%{_desktopdir}/kodi.desktop
+%{_iconsdir}/hicolor/*/apps/%{name}.png
+%{_datadir}/xsessions/kodi.desktop
+
+# legacy xbmc compatibility links
+%attr(755,root,root) %{_bindir}/xbmc
+%attr(755,root,root) %{_bindir}/xbmc-standalone
+%{_libdir}/xbmc
+%{_datadir}/xbmc
+%{_datadir}/xsessions/xbmc.desktop
