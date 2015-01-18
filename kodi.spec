@@ -35,7 +35,6 @@ BuildRequires:	bzip2-devel
 BuildRequires:	cmake
 BuildRequires:	curl-devel
 BuildRequires:	dbus-devel
-# AUTO: -- which: no doxygen in (/bin:/usr/bin:/usr/sbin:/sbin:/usr/X11R6/bin)
 BuildRequires:	doxygen
 BuildRequires:	ffmpeg-devel
 BuildRequires:	flac-devel
@@ -78,7 +77,6 @@ BuildRequires:	libva-devel
 BuildRequires:	libva-glx-devel
 BuildRequires:	libvdpau-devel
 BuildRequires:	libvorbis-devel
-# AUTO: -- Package libxslt was not found in the pkg-config search path.
 BuildRequires:	libxslt-devel
 BuildRequires:	lzo-devel
 BuildRequires:	mysql-devel
@@ -108,7 +106,6 @@ BuildRequires:	xorg-lib-libXrandr-devel
 BuildRequires:	xorg-lib-libXt-devel
 BuildRequires:	xorg-lib-libXtst-devel
 BuildRequires:	yajl-devel
-# AUTO: -- ./configure[3718]: yasm: not found
 BuildRequires:	yasm
 BuildRequires:	zip
 BuildRequires:	zlib-devel
@@ -123,6 +120,16 @@ Requires:	/usr/bin/glxinfo
 Requires:	SDL >= 1.2.14-5
 Requires:	lsb-release
 Requires:	xorg-app-xdpyinfo
+# dlopened libraries:
+# grep 'DLL_PATH_.*lib.*\.so' ./xbmc/DllPaths_generated.h | grep -v special://
+Requires:	curl-libs
+Requires:	libass
+Requires:	libbluray
+Requires:	libmodplug
+Requires:	libmpeg2-libs
+Requires:	libogg
+Requires:	libplist
+Requires:	libvorbis
 Obsoletes:	xbmc < 14.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
