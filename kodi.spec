@@ -10,18 +10,17 @@
 %bcond_without	goom	# build without goom visualisation
 %bcond_with	hal	# build with HAL
 
-%define	codename Gotham
-
+%define	codename Helix
 Summary:	XBMC is a free and open source media-player and entertainment hub
-Name:		xbmc
-Version:	13.2
-Release:	2
+Name:		kodi
+Version:	14.0
+Release:	0.1
 License:	GPL v2+ and GPL v3+
 Group:		Applications/Multimedia
-Source0:	http://mirrors.xbmc.org/releases/source/%{name}-%{version}.tar.gz
-# Source0-md5:	d80153b2cc78b88966458ab136e9494f
+Source0:	http://mirrors.kodi.tv/releases/source/%{version}-%{codename}.tar.gz
+# Source0-md5:	9717c539789789b8aeaf1dcfdb9f2c69
 Patch0:		jpeglib-boolean.patch
-URL:		http://xbmc.org/
+URL:		http://kodi.tv/
 BuildRequires:	Mesa-libGLU-devel
 BuildRequires:	OpenGL-devel
 BuildRequires:	SDL_image-devel
@@ -118,6 +117,7 @@ Requires:	/usr/bin/glxinfo
 Requires:	SDL >= 1.2.14-5
 Requires:	lsb-release
 Requires:	xorg-app-xdpyinfo
+Obsoletes:	xbmc < 14.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -127,7 +127,7 @@ and featuring playlist, audio visualizations, slideshow, and weather
 forecast functions, together third-party plugins.
 
 %prep
-%setup -q -n %{name}-%{version}-%{codename}
+%setup -q -n xbmc-%{version}-%{codename}
 %patch0 -p1
 
 %build
