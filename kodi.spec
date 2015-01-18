@@ -35,6 +35,8 @@ BuildRequires:	bzip2-devel
 BuildRequires:	cmake
 BuildRequires:	curl-devel
 BuildRequires:	dbus-devel
+# AUTO: -- which: no doxygen in (/bin:/usr/bin:/usr/sbin:/sbin:/usr/X11R6/bin)
+BuildRequires:	doxygen
 BuildRequires:	ffmpeg-devel
 BuildRequires:	flac-devel
 BuildRequires:	fontconfig-devel
@@ -76,6 +78,8 @@ BuildRequires:	libva-devel
 BuildRequires:	libva-glx-devel
 BuildRequires:	libvdpau-devel
 BuildRequires:	libvorbis-devel
+# AUTO: -- Package libxslt was not found in the pkg-config search path.
+BuildRequires:	libxslt-devel
 BuildRequires:	lzo-devel
 BuildRequires:	mysql-devel
 %ifarch %{ix86}
@@ -104,6 +108,8 @@ BuildRequires:	xorg-lib-libXrandr-devel
 BuildRequires:	xorg-lib-libXt-devel
 BuildRequires:	xorg-lib-libXtst-devel
 BuildRequires:	yajl-devel
+# AUTO: -- ./configure[3718]: yasm: not found
+BuildRequires:	yasm
 BuildRequires:	zip
 BuildRequires:	zlib-devel
 #https://github.com/sahlberg/libnfs
