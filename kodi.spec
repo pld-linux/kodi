@@ -11,7 +11,7 @@
 %bcond_with	hal	# build with HAL
 
 %define	codename Helix
-Summary:	XBMC is a free and open source media-player and entertainment hub
+Summary:	Kodi is a free and open source media-player and entertainment hub
 Name:		kodi
 Version:	14.0
 Release:	0.1
@@ -121,7 +121,7 @@ Requires:	SDL >= 1.2.14-5
 Requires:	lsb-release
 Requires:	xorg-app-xdpyinfo
 # dlopened libraries:
-# grep 'DLL_PATH_.*lib.*\.so' ./xbmc/DllPaths_generated.h | grep -v special://
+# grep 'DLL_PATH_.*lib.*\.so' xbmc/DllPaths_generated.h | grep -v special://
 Requires:	curl-libs
 Requires:	libass
 Requires:	libbluray
@@ -134,10 +134,13 @@ Obsoletes:	xbmc < 14.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-XBMC media center is a free cross-platform media-player jukebox and
-entertainment hub. XBMC can play a spectrum of of multimedia formats,
-and featuring playlist, audio visualizations, slideshow, and weather
-forecast functions, together third-party plugins.
+Kodi Entertainment Center (formerly XBMC) is a free and open-source
+media player software developed by the XBMC Foundation, a non-profit
+technology consortium. Kodi is available for multiple operating
+systems and hardware platforms, with a software 10-foot user interface
+for use with televisions and remote controls. It allows users to play
+and view most videos, music, such as podcasts from the internet, and
+all common digital media files from local and network storage media.
 
 %prep
 %setup -q -n xbmc-%{version}-%{codename}
