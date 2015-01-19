@@ -9,8 +9,8 @@
 %bcond_with	afpclient	# AFP support via libafpclient
 %bcond_without	airplay		# AirPlay support
 %bcond_with	airtunes	# AirTunes support
-%bcond_without	alsa		# ALSA support (only for linux/freebsd)
-%bcond_without	avahi		# Avahi support (default is enabled if libavahi-common and libavahi-client is found)
+%bcond_without	alsa		# ALSA support
+%bcond_without	avahi		# Avahi support
 %bcond_without	dbus		# DBUS support
 %bcond_without	dvdcss		# DVDCSS support
 %bcond_without	fishbmc		# FishBMC visualisation
@@ -31,13 +31,13 @@
 %bcond_without	pulse		# PulseAudio support
 %bcond_without	rsxs		# really slick X screensavers
 %bcond_without	rtmp		# RTMP support via librtmp
-%bcond_without	samba		# SAMBA support (default is enabled)
+%bcond_without	samba		# SAMBA support
 %bcond_without	sdl		# SDL
 %bcond_without	spectrum	# Spectrum visualisation
-%bcond_without	ssh		# SSH SFTP support (default is enabled)
+%bcond_without	ssh		# SSH SFTP support
 %bcond_without	texturepacker	# texturepacker support
 %bcond_without	udev		# udev support
-%bcond_without	upnp		# UPnP support (default is enabled)
+%bcond_without	upnp		# UPnP support
 %bcond_without	vaapi		# VAAPI decoding
 %bcond_without	vdpau		# VDPAU decoding
 %bcond_with	vtbdecoder	# VTBDecoder decoding (VTB Decoder not supported on this platform)
@@ -45,6 +45,13 @@
 %bcond_without	webserver	# webserver
 %bcond_without	x11		# x11 'Linux Only'
 %bcond_without	xrandr		# XRandR support
+%bcond_with	asap_codec	# ASAP ADPCM support
+%bcond_with	gles		# OpenGLES rendering
+%bcond_without	libbluray	# libbluray support
+%bcond_without	mid		# MID support
+%bcond_with	profiling	# gprof profiling
+%bcond_with	tegra		# Tegra2 arm
+%bcond_with	wayland		# wayland
 # System libs:
 %bcond_without	system_ffmpeg	# build with system ffmpeg
 %bcond_without	system_dvdread	# build with system dvdread
@@ -218,24 +225,28 @@ ln -s %{SOURCE1} tools/depends/target/ffmpeg/ffmpeg-2.4.4-%{codename}.tar.gz
 	%{__enable_disable airplay} \
 	%{__enable_disable airtunes} \
 	%{__enable_disable alsa} \
+	%{__enable_disable asap_codec asap-codec} \
 	%{__enable_disable avahi} \
 	%{__enable_disable dbus} \
 	%{__enable_disable dvdcss} \
 	%{__enable_disable fishbmc} \
+	%{__enable_disable gles} \
 	%{__enable_disable gl} \
 	%{__enable_disable goom} \
 	%{__enable_disable gtest} \
-	%{__enable_disable texturepacker} \
 	%{__enable_disable joystick} \
+	%{__enable_disable libbluray} \
 	%{__enable_disable libcap} \
 	%{__enable_disable libcec} \
 	%{__enable_disable libusb} \
 	%{__enable_disable mdnsembedded} \
+	%{__enable_disable mid} \
 	%{__enable_disable mysql} \
 	%{__enable_disable nfs} \
 	%{__enable_disable non_free non-free} \
 	%{__enable_disable openmax} \
 	%{__enable_disable optical_drive optical-drive} \
+	%{__enable_disable profiling} \
 	%{__enable_disable projectm} \
 	%{__enable_disable pulse} \
 	%{__enable_disable rsxs} \
@@ -244,12 +255,15 @@ ln -s %{SOURCE1} tools/depends/target/ffmpeg/ffmpeg-2.4.4-%{codename}.tar.gz
 	%{__enable_disable sdl} \
 	%{__enable_disable spectrum} \
 	%{__enable_disable ssh} \
+	%{__enable_disable tegra} \
+	%{__enable_disable texturepacker} \
 	%{__enable_disable udev} \
 	%{__enable_disable upnp} \
 	%{__enable_disable vaapi} \
 	%{__enable_disable vdpau} \
 	%{__enable_disable vtbdecoder} \
 	%{__enable_disable waveform} \
+	%{__enable_disable wayland} \
 	%{__enable_disable webserver} \
 	%{__enable_disable x11} \
 	%{__enable_disable xrandr} \
