@@ -49,6 +49,7 @@
 %bcond_without	xrandr		# XRandR support
 # System libs:
 %bcond_without	system_ffmpeg	# build with system ffmpeg
+%bcond_without	system_dvdread	# build with system dvdread
 
 %define	codename Helix
 Summary:	Kodi is a free and open source media-player and entertainment hub
@@ -63,6 +64,7 @@ Source1:	https://github.com/xbmc/FFmpeg/archive/2.4.4-%{codename}.tar.gz
 # Source1-md5:	19b5d29ef6b5a6fc202c652fe3905d9b
 Patch0:		jpeglib-boolean.patch
 Patch1:		dvddemux-ffmpeg.patch
+Patch2:		dvdread.patch
 URL:		http://kodi.tv/
 BuildRequires:	Mesa-libGLU-devel
 BuildRequires:	OpenGL-devel
@@ -97,6 +99,7 @@ BuildRequires:	libbluray-devel >= 0.2.1
 BuildRequires:	libcap-devel
 BuildRequires:	libcdio-devel
 %{?with_libcec:BuildRequires:	libcec-devel}
+%{?with_system_dvdread:BuildRequires:	libdvdread-devel}
 %ifarch i686 pentium4 athlon %{x8664}
 BuildRequires:	libcrystalhd-devel
 %endif
@@ -191,6 +194,9 @@ all common digital media files from local and network storage media.
 
 %if %{without system_ffmpeg}
 ln -s %{SOURCE1} tools/depends/target/ffmpeg/ffmpeg-2.4.4-%{codename}.tar.gz
+%endif
+%if %{with system_dvdread}
+#rm -r lib/libdvd/libdvdread
 %endif
 
 %build
