@@ -53,7 +53,7 @@
 Summary:	Kodi is a free and open source media-player and entertainment hub
 Name:		kodi
 Version:	14.0
-Release:	0.2
+Release:	0.3
 License:	GPL v2+ and GPL v3+
 Group:		Applications/Multimedia
 Source0:	http://mirrors.kodi.tv/releases/source/%{version}-%{codename}.tar.gz
@@ -188,7 +188,8 @@ all common digital media files from local and network storage media.
 %prep
 %setup -q -n xbmc-%{version}-%{codename}
 %patch0 -p1
-%patch1 -p0
+%{?with_system_ffmpeg:%patch1 -p0}
+%{?with_system_dvdread:%patch2 -p1}
 
 rm -r lib/cximage-6.0/zlib
 #rm -r lib/libhdhomerun
@@ -200,12 +201,10 @@ rm -r lib/libmicrohttpd
 rm -r lib/libmodplug
 rm -r lib/librtmp
 rm -r lib/win32
+%{?with_system_dvdread:rm -r lib/libdvd/libdvdread}
 
 %if %{without system_ffmpeg}
 ln -s %{SOURCE1} tools/depends/target/ffmpeg/ffmpeg-2.4.4-%{codename}.tar.gz
-%endif
-%if %{with system_dvdread}
-#rm -r lib/libdvd/libdvdread
 %endif
 
 %build
