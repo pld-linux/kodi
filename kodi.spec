@@ -7,36 +7,48 @@
 # - bundled ffmpeg build (tools/depends/target/ffmpeg/autobuild.sh) enables nonfree & gpl!
 #
 # Conditional build:
+# Features:
 %bcond_with	afpclient	# AFP support via libafpclient
 %bcond_without	airplay		# AirPlay support
 %bcond_with	airtunes	# AirTunes support
-%bcond_without	dvdcss	# DVDCSS support
+%bcond_without	alsa		# ALSA support (only for linux/freebsd)
+%bcond_without	avahi		# Avahi support (default is enabled if libavahi-common and libavahi-client is found)
+%bcond_without	dbus		# DBUS support
+%bcond_without	dvdcss		# DVDCSS support
 %bcond_without	fishbmc		# FishBMC visualisation
 %bcond_without	gl		# OpenGL rendering
 %bcond_without	goom		# GOOM visualisation
-%bcond_with	gtest	# configure Google Test Framework
-%bcond_with	hal	# build with HAL
+%bcond_with	gtest		# configure Google Test Framework
+%bcond_with	hal		# build with HAL
 %bcond_without	joystick	# SDL joystick support
 %bcond_without	libcap		# libcap support
 %bcond_with	libcec		# libcec support
 %bcond_with	libusb		# libusb support
 %bcond_with	mdnsembedded	# mDNSEmbedded support
+%bcond_without	mysql		# MySQL
 %bcond_with	nfs		# NFS support via libnfs
+%bcond_without	non_free	# componentents with non-compliant licenses
 %bcond_with	openmax		# OpenMax decoding, requires OpenGLES
+%bcond_without	optical_drive	# optical drive
 %bcond_without	projectm	# ProjectM visualisation
 %bcond_without	pulse		# PulseAudio support
 %bcond_without	rsxs		# really slick X screensavers
 %bcond_without	rtmp		# RTMP support via librtmp
+%bcond_without	samba		# SAMBA support (default is enabled)
 %bcond_without	sdl		# SDL
 %bcond_without	spectrum	# Spectrum visualisation
+%bcond_without	ssh		# SSH SFTP support (default is enabled)
 %bcond_without	texturepacker	# texturepacker support
 %bcond_without	udev		# udev support
+%bcond_without	upnp		# UPnP support (default is enabled)
 %bcond_without	vaapi		# VAAPI decoding
 %bcond_without	vdpau		# VDPAU decoding
 %bcond_with	vtbdecoder	# VTBDecoder decoding (VTB Decoder not supported on this platform)
 %bcond_without	waveform	# Waveform visualisation
+%bcond_without	webserver	# webserver
 %bcond_without	x11		# x11 'Linux Only'
 %bcond_without	xrandr		# XRandR support
+# System libs:
 %bcond_with	system_ffmpeg	# build with system ffmpeg
 
 %define	codename Helix
@@ -191,6 +203,9 @@ ln -s %{SOURCE1} tools/depends/target/ffmpeg
 	%{__enable_disable afpclient} \
 	%{__enable_disable airplay} \
 	%{__enable_disable airtunes} \
+	%{__enable_disable alsa} \
+	%{__enable_disable avahi} \
+	%{__enable_disable dbus} \
 	%{__enable_disable dvdcss} \
 	%{__enable_disable fishbmc} \
 	%{__enable_disable gl} \
@@ -203,19 +218,26 @@ ln -s %{SOURCE1} tools/depends/target/ffmpeg
 	%{__enable_disable libcec} \
 	%{__enable_disable libusb} \
 	%{__enable_disable mdnsembedded} \
+	%{__enable_disable mysql} \
 	%{__enable_disable nfs} \
+	%{__enable_disable non_free non-free} \
 	%{__enable_disable openmax} \
+	%{__enable_disable optical_drive optical-drive} \
 	%{__enable_disable projectm} \
 	%{__enable_disable pulse} \
 	%{__enable_disable rsxs} \
 	%{__enable_disable rtmp} \
+	%{__enable_disable samba} \
 	%{__enable_disable sdl} \
 	%{__enable_disable spectrum} \
+	%{__enable_disable ssh} \
 	%{__enable_disable udev} \
+	%{__enable_disable upnp} \
 	%{__enable_disable vaapi} \
 	%{__enable_disable vdpau} \
 	%{__enable_disable vtbdecoder} \
 	%{__enable_disable waveform} \
+	%{__enable_disable webserver} \
 	%{__enable_disable x11} \
 	%{__enable_disable xrandr} \
 	%{nil}
