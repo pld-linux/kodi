@@ -6,7 +6,9 @@
 #  - split to subpackages?
 #
 # Conditional build:
-%bcond_without	cec	# build without cec support
+%bcond_with	afpclient	# AFP support via libafpclient
+%bcond_without	airplay		# AirPlay support
+%bcond_with	airtunes	# AirTunes support
 %bcond_without	dvdcss	# DVDCSS support
 %bcond_without	fishbmc		# FishBMC visualisation
 %bcond_without	gl		# OpenGL rendering
@@ -14,10 +16,23 @@
 %bcond_with	gtest	# configure Google Test Framework
 %bcond_with	hal	# build with HAL
 %bcond_without	joystick	# SDL joystick support
+%bcond_without	libcap		# libcap support
+%bcond_with	libcec		# libcec support
+%bcond_with	libusb		# libusb support
+%bcond_with	mdnsembedded	# mDNSEmbedded support
+%bcond_with	nfs		# NFS support via libnfs
+%bcond_with	openmax		# OpenMax decoding, requires OpenGLES
 %bcond_without	projectm	# ProjectM visualisation
+%bcond_without	pulse		# PulseAudio support
 %bcond_without	rsxs		# really slick X screensavers
+%bcond_without	rtmp		# RTMP support via librtmp
+%bcond_without	sdl		# SDL
 %bcond_without	spectrum	# Spectrum visualisation
 %bcond_without	texturepacker	# texturepacker support
+%bcond_without	udev		# udev support
+%bcond_without	vaapi		# VAAPI decoding
+%bcond_without	vdpau		# VDPAU decoding
+%bcond_with	vtbdecoder	# VTBDecoder decoding (VTB Decoder not supported on this platform)
 %bcond_without	waveform	# Waveform visualisation
 %bcond_without	x11		# x11 'Linux Only'
 %bcond_without	xrandr		# XRandR support
@@ -66,7 +81,7 @@ BuildRequires:	libass-devel
 BuildRequires:	libbluray-devel >= 0.2.1
 BuildRequires:	libcap-devel
 BuildRequires:	libcdio-devel
-%{?with_cec:BuildRequires:	libcec-devel}
+%{?with_libcec:BuildRequires:	libcec-devel}
 %ifarch i686 pentium4 athlon %{x8664}
 BuildRequires:	libcrystalhd-devel
 %endif
@@ -164,13 +179,10 @@ all common digital media files from local and network storage media.
 %configure \
 	--disable-silent-rules \
 	--disable-debug \
-	--disable-afpclient \
-	--disable-airtunes \
 	--disable-ccache \
-	--disable-libusb \
-	--disable-nfs \
-	--enable-pulse \
-	--enable-udev \
+	%{__enable_disable afpclient} \
+	%{__enable_disable airplay} \
+	%{__enable_disable airtunes} \
 	%{__enable_disable dvdcss} \
 	%{__enable_disable fishbmc} \
 	%{__enable_disable gl} \
@@ -179,10 +191,22 @@ all common digital media files from local and network storage media.
 	%{__enable_disable gtexturepacker} \
 	%{__enable_disable hal} \
 	%{__enable_disable joystick} \
+	%{__enable_disable libcap} \
 	%{__enable_disable libcec} \
+	%{__enable_disable libusb} \
+	%{__enable_disable mdnsembedded} \
+	%{__enable_disable nfs} \
+	%{__enable_disable openmax} \
 	%{__enable_disable projectm} \
+	%{__enable_disable pulse} \
 	%{__enable_disable rsxs} \
+	%{__enable_disable rtmp} \
+	%{__enable_disable sdl} \
 	%{__enable_disable spectrum} \
+	%{__enable_disable udev} \
+	%{__enable_disable vaapi} \
+	%{__enable_disable vdpau} \
+	%{__enable_disable vtbdecoder} \
 	%{__enable_disable waveform} \
 	%{__enable_disable x11} \
 	%{__enable_disable xrandr} \
