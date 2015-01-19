@@ -7,8 +7,20 @@
 #
 # Conditional build:
 %bcond_without	cec	# build without cec support
-%bcond_without	goom	# build without goom visualisation
+%bcond_without	dvdcss	# DVDCSS support
+%bcond_without	fishbmc		# FishBMC visualisation
+%bcond_without	gl		# OpenGL rendering
+%bcond_without	goom		# GOOM visualisation
+%bcond_with	gtest	# configure Google Test Framework
 %bcond_with	hal	# build with HAL
+%bcond_without	joystick	# SDL joystick support
+%bcond_without	projectm	# ProjectM visualisation
+%bcond_without	rsxs		# really slick X screensavers
+%bcond_without	spectrum	# Spectrum visualisation
+%bcond_without	texturepacker	# texturepacker support
+%bcond_without	waveform	# Waveform visualisation
+%bcond_without	x11		# x11 'Linux Only'
+%bcond_without	xrandr		# XRandR support
 
 %define	codename Helix
 Summary:	Kodi is a free and open source media-player and entertainment hub
@@ -151,7 +163,6 @@ all common digital media files from local and network storage media.
 %configure \
 	--disable-silent-rules \
 	--disable-debug \
-	--enable-external-libraries \
 	--disable-afpclient \
 	--disable-airtunes \
 	--disable-ccache \
@@ -159,9 +170,22 @@ all common digital media files from local and network storage media.
 	--disable-nfs \
 	--enable-pulse \
 	--enable-udev \
+	%{__enable_disable dvdcss} \
+	%{__enable_disable fishbmc} \
+	%{__enable_disable gl} \
 	%{__enable_disable goom} \
+	%{__enable_disable gtest} \
+	%{__enable_disable gtexturepacker} \
 	%{__enable_disable hal} \
-	%{__enable_disable libcec}
+	%{__enable_disable joystick} \
+	%{__enable_disable libcec} \
+	%{__enable_disable projectm} \
+	%{__enable_disable rsxs} \
+	%{__enable_disable spectrum} \
+	%{__enable_disable waveform} \
+	%{__enable_disable x11} \
+	%{__enable_disable xrandr} \
+	%{nil}
 
 %{__make}
 
