@@ -20,10 +20,10 @@
 %bcond_without	joystick	# SDL joystick support
 %bcond_without	libcap		# libcap support
 %bcond_with	libcec		# libcec support
-%bcond_with	libusb		# libusb support
+%bcond_without	libusb		# libusb support
 %bcond_with	mdnsembedded	# mDNSEmbedded support
 %bcond_without	mysql		# MySQL
-%bcond_with	nfs		# NFS support via libnfs
+%bcond_without	nfs		# NFS support via libnfs
 %bcond_without	non_free	# componentents with non-compliant licenses
 %bcond_with	openmax		# OpenMax decoding, requires OpenGLES
 %bcond_without	optical_drive	# optical drive
