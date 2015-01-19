@@ -1,9 +1,7 @@
 # TODO:
 #  - fix build flags - some files are compiled with -O3 and without rpm*flags
-#  - fix linking argument order
 #  - add and/or fix users/groups permissions
 #  - split to subpackages?
-# - system ffmpeg (--with-ffmpeg=shared), DVDDemuxFFmpeg.cpp:542:41: error: 'av_read_frame_flush' was not declared in this scope
 # - bundled ffmpeg build (tools/depends/target/ffmpeg/autobuild.sh) enables nonfree & gpl!
 #
 # Conditional build:
