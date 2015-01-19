@@ -1,9 +1,10 @@
-#
 # TODO:
 #  - fix build flags - some files are compiled with -O3 and without rpm*flags
 #  - fix linking argument order
 #  - add and/or fix users/groups permissions
 #  - split to subpackages?
+# - system ffmpeg (--with-ffmpeg=shared), DVDDemuxFFmpeg.cpp:542:41: error: 'av_read_frame_flush' was not declared in this scope
+# - bundled ffmpeg build (tools/depends/target/ffmpeg/autobuild.sh) enables nonfree & gpl!
 #
 # Conditional build:
 %bcond_with	afpclient	# AFP support via libafpclient
@@ -36,6 +37,7 @@
 %bcond_without	waveform	# Waveform visualisation
 %bcond_without	x11		# x11 'Linux Only'
 %bcond_without	xrandr		# XRandR support
+%bcond_with	system_ffmpeg	# build with system ffmpeg
 
 %define	codename Helix
 Summary:	Kodi is a free and open source media-player and entertainment hub
@@ -46,6 +48,8 @@ License:	GPL v2+ and GPL v3+
 Group:		Applications/Multimedia
 Source0:	http://mirrors.kodi.tv/releases/source/%{version}-%{codename}.tar.gz
 # Source0-md5:	9717c539789789b8aeaf1dcfdb9f2c69
+Source1:	https://github.com/xbmc/FFmpeg/archive/2.4.4-Helix.tar.gz
+# Source1-md5:	19b5d29ef6b5a6fc202c652fe3905d9b
 Patch0:		jpeglib-boolean.patch
 URL:		http://kodi.tv/
 BuildRequires:	Mesa-libGLU-devel
@@ -118,7 +122,6 @@ BuildRequires:	pulseaudio-devel
 BuildRequires:	python-devel >= 2.4
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.566
-# used internally
 BuildRequires:	sed >= 4.0
 BuildRequires:	sqlite3-devel
 BuildRequires:	swig
@@ -174,12 +177,17 @@ all common digital media files from local and network storage media.
 %setup -q -n xbmc-%{version}-%{codename}
 %patch0 -p1
 
+%if %{with system_ffmpeg}
+ln -s %{SOURCE1} tools/depends/target/ffmpeg
+%endif
+
 %build
 ./bootstrap
 %configure \
 	--disable-silent-rules \
 	--disable-debug \
 	--disable-ccache \
+	--with-ffmpeg=%{!?with_system_ffmpeg:force}%{?with_system_ffmpeg:shared} \
 	%{__enable_disable afpclient} \
 	%{__enable_disable airplay} \
 	%{__enable_disable airtunes} \
