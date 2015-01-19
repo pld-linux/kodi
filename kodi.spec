@@ -19,7 +19,6 @@
 %bcond_without	gl		# OpenGL rendering
 %bcond_without	goom		# GOOM visualisation
 %bcond_with	gtest		# configure Google Test Framework
-%bcond_with	hal		# build with HAL
 %bcond_without	joystick	# SDL joystick support
 %bcond_without	libcap		# libcap support
 %bcond_with	libcec		# libcec support
@@ -91,7 +90,6 @@ BuildRequires:	gettext-autopoint
 BuildRequires:	gettext-tools
 BuildRequires:	glew-devel
 BuildRequires:	gperf
-%{?with_hal:BuildRequires:	hal-devel}
 BuildRequires:	jasper-devel
 BuildRequires:	jre
 BuildRequires:	libass-devel
@@ -213,8 +211,7 @@ ln -s %{SOURCE1} tools/depends/target/ffmpeg/ffmpeg-2.4.4-%{codename}.tar.gz
 	%{__enable_disable gl} \
 	%{__enable_disable goom} \
 	%{__enable_disable gtest} \
-	%{__enable_disable gtexturepacker} \
-	%{__enable_disable hal} \
+	%{__enable_disable texturepacker} \
 	%{__enable_disable joystick} \
 	%{__enable_disable libcap} \
 	%{__enable_disable libcec} \
