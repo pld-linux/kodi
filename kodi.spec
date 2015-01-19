@@ -149,20 +149,21 @@ all common digital media files from local and network storage media.
 %build
 ./bootstrap
 %configure \
+	--disable-silent-rules \
 	--disable-debug \
 	--enable-external-libraries \
-	--enable-pulse \
-	--enable-udev \
-	--disable-libusb \
-	--disable-nfs \
 	--disable-afpclient \
 	--disable-airtunes \
+	--disable-ccache \
+	--disable-libusb \
+	--disable-nfs \
+	--enable-pulse \
+	--enable-udev \
 	%{__enable_disable goom} \
 	%{__enable_disable hal} \
 	%{__enable_disable libcec}
 
-LIBS="-lpthread"
-%{__make} V=1
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
