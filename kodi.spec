@@ -35,6 +35,7 @@ Patch0:		jpeglib-boolean.patch
 URL:		http://kodi.tv/
 BuildRequires:	Mesa-libGLU-devel
 BuildRequires:	OpenGL-devel
+BuildRequires:	SDL2-devel
 BuildRequires:	SDL_image-devel
 BuildRequires:	SDL_mixer-devel
 BuildRequires:	alsa-lib-devel
