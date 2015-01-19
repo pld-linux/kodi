@@ -192,6 +192,17 @@ all common digital media files from local and network storage media.
 %patch0 -p1
 %patch1 -p0
 
+rm -r lib/cximage-6.0/zlib
+#rm -r lib/libhdhomerun
+rm -r lib/libmpeg2
+rm -r xbmc/cores/dvdplayer/DVDCodecs/Video/libmpeg2
+rm -r lib/enca
+rm -r lib/libbluray
+rm -r lib/libmicrohttpd
+rm -r lib/libmodplug
+rm -r lib/librtmp
+rm -r lib/win32
+
 %if %{without system_ffmpeg}
 ln -s %{SOURCE1} tools/depends/target/ffmpeg/ffmpeg-2.4.4-%{codename}.tar.gz
 %endif
