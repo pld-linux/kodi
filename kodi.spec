@@ -80,7 +80,7 @@ BuildRequires:	cmake
 BuildRequires:	curl-devel
 BuildRequires:	dbus-devel
 BuildRequires:	doxygen
-BuildRequires:	ffmpeg-devel
+%{?with_system_ffmpeg:BuildRequires:	ffmpeg-devel >= 2.4.4}
 BuildRequires:	flac-devel
 BuildRequires:	fontconfig-devel
 BuildRequires:	freetype-devel
