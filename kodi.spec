@@ -258,7 +258,7 @@ ln -s %{SOURCE1} tools/depends/target/ffmpeg/ffmpeg-2.4.4-%{codename}.tar.gz
 	%{__enable_disable xrandr} \
 	%{nil}
 
-%{__make}
+%{__make} V=1
 
 %install
 rm -rf $RPM_BUILD_ROOT
