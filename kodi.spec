@@ -49,7 +49,7 @@
 %bcond_without	x11		# x11 'Linux Only'
 %bcond_without	xrandr		# XRandR support
 # System libs:
-%bcond_with	system_ffmpeg	# build with system ffmpeg
+%bcond_without	system_ffmpeg	# build with system ffmpeg
 
 %define	codename Helix
 Summary:	Kodi is a free and open source media-player and entertainment hub
@@ -63,6 +63,7 @@ Source0:	http://mirrors.kodi.tv/releases/source/%{version}-%{codename}.tar.gz
 Source1:	https://github.com/xbmc/FFmpeg/archive/2.4.4-%{codename}.tar.gz
 # Source1-md5:	19b5d29ef6b5a6fc202c652fe3905d9b
 Patch0:		jpeglib-boolean.patch
+Patch1:		dvddemux-ffmpeg.patch
 URL:		http://kodi.tv/
 BuildRequires:	Mesa-libGLU-devel
 BuildRequires:	OpenGL-devel
@@ -188,6 +189,7 @@ all common digital media files from local and network storage media.
 %prep
 %setup -q -n xbmc-%{version}-%{codename}
 %patch0 -p1
+%patch1 -p0
 
 %if %{without system_ffmpeg}
 ln -s %{SOURCE1} tools/depends/target/ffmpeg/ffmpeg-2.4.4-%{codename}.tar.gz
