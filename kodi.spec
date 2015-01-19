@@ -60,7 +60,7 @@ License:	GPL v2+ and GPL v3+
 Group:		Applications/Multimedia
 Source0:	http://mirrors.kodi.tv/releases/source/%{version}-%{codename}.tar.gz
 # Source0-md5:	9717c539789789b8aeaf1dcfdb9f2c69
-Source1:	https://github.com/xbmc/FFmpeg/archive/2.4.4-Helix.tar.gz
+Source1:	https://github.com/xbmc/FFmpeg/archive/2.4.4-%{codename}.tar.gz
 # Source1-md5:	19b5d29ef6b5a6fc202c652fe3905d9b
 Patch0:		jpeglib-boolean.patch
 URL:		http://kodi.tv/
@@ -189,8 +189,8 @@ all common digital media files from local and network storage media.
 %setup -q -n xbmc-%{version}-%{codename}
 %patch0 -p1
 
-%if %{with system_ffmpeg}
-ln -s %{SOURCE1} tools/depends/target/ffmpeg
+%if %{without system_ffmpeg}
+ln -s %{SOURCE1} tools/depends/target/ffmpeg/ffmpeg-2.4.4-%{codename}.tar.gz
 %endif
 
 %build
