@@ -55,7 +55,7 @@
 Summary:	Kodi is a free and open source media-player and entertainment hub
 Name:		kodi
 Version:	14.0
-Release:	0.1
+Release:	0.2
 License:	GPL v2+ and GPL v3+
 Group:		Applications/Multimedia
 Source0:	http://mirrors.kodi.tv/releases/source/%{version}-%{codename}.tar.gz
@@ -271,6 +271,10 @@ rm -rf $RPM_BUILD_ROOT
 %{__rm} -r $RPM_BUILD_ROOT%{_includedir}/kodi
 %{__rm} -r $RPM_BUILD_ROOT%{_includedir}/xbmc
 
+# no real use for symlinks to datadir, and make rpm packaging more difficult (symlink vs dir issues)
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/xbmc
+%{__rm} $RPM_BUILD_ROOT%{_datadir}/xbmc
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -288,6 +292,4 @@ rm -rf $RPM_BUILD_ROOT
 # legacy xbmc compatibility links
 %attr(755,root,root) %{_bindir}/xbmc
 %attr(755,root,root) %{_bindir}/xbmc-standalone
-%{_libdir}/xbmc
-%{_datadir}/xbmc
 %{_datadir}/xsessions/xbmc.desktop
