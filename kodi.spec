@@ -56,19 +56,18 @@
 %bcond_without	system_ffmpeg	# build with system ffmpeg
 %bcond_without	system_dvdread	# build with system dvdread
 
-%define	codename Helix
+%define	codename Isengard
 Summary:	Kodi is a free and open source media-player and entertainment hub
 Name:		kodi
-Version:	14.0
-Release:	0.3
+Version:	15.0
+Release:	0.1
 License:	GPL v2+ and GPL v3+
 Group:		Applications/Multimedia
 Source0:	http://mirrors.kodi.tv/releases/source/%{version}-%{codename}.tar.gz
-# Source0-md5:	9717c539789789b8aeaf1dcfdb9f2c69
-Source1:	https://github.com/xbmc/FFmpeg/archive/2.4.4-%{codename}.tar.gz
-# Source1-md5:	19b5d29ef6b5a6fc202c652fe3905d9b
+# Source0-md5:	d3bd3dc9fd705bcf59d8c91199994537
+Source1:	https://github.com/xbmc/FFmpeg/archive/2.6.3-%{codename}.tar.gz
+# Source1-md5:	31c6cd81c44cce93358b6d9357772aec
 Patch0:		jpeglib-boolean.patch
-Patch1:		dvddemux-ffmpeg.patch
 Patch2:		dvdread.patch
 URL:		http://kodi.tv/
 BuildRequires:	Mesa-libGLU-devel
@@ -195,17 +194,13 @@ all common digital media files from local and network storage media.
 %prep
 %setup -q -n xbmc-%{version}-%{codename}
 %patch0 -p1
-%{?with_system_ffmpeg:%patch1 -p0}
 %{?with_system_dvdread:%patch2 -p1}
 
 rm -r lib/cximage-6.0/zlib
 #rm -r lib/libhdhomerun
 rm -r lib/libmpeg2
 rm -r xbmc/cores/dvdplayer/DVDCodecs/Video/libmpeg2
-rm -r lib/enca
 rm -r lib/libbluray
-rm -r lib/libmicrohttpd
-rm -r lib/libmodplug
 rm -r lib/librtmp
 rm -r lib/win32
 %{?with_system_dvdread:rm -r lib/libdvd/libdvdread}
