@@ -94,6 +94,7 @@ BuildRequires:	fribidi-devel
 BuildRequires:	gawk
 BuildRequires:	gettext-autopoint
 BuildRequires:	gettext-tools
+BuildRequires:	giflib-devel
 BuildRequires:	glew-devel
 BuildRequires:	gperf
 BuildRequires:	jasper-devel
