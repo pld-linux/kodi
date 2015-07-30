@@ -60,7 +60,7 @@
 Summary:	Kodi is a free and open source media-player and entertainment hub
 Name:		kodi
 Version:	15.0
-Release:	0.1
+Release:	1
 License:	GPL v2+ and GPL v3+
 Group:		Applications/Multimedia
 Source0:	http://mirrors.kodi.tv/releases/source/%{version}-%{codename}.tar.gz
