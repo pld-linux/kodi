@@ -1,0 +1,21 @@
+--- xbmc-15.0-Isengard/tools/depends/native/TexturePacker/Makefile~	2015-07-21 20:41:29.000000000 +0200
++++ xbmc-15.0-Isengard/tools/depends/native/TexturePacker/Makefile	2015-07-30 18:37:38.691977581 +0200
+@@ -9,18 +9,10 @@
+ 
+ ifeq ($(NATIVEPLATFORM),)
+   PLATFORM = native
+-  EXTRA_CONFIGURE = --enable-static
+ else
+   PLATFORM = $(NATIVEPLATFORM)
+ endif
+ 
+-ifeq ($(NATIVE_OS), linux)
+-  EXTRA_CONFIGURE = --enable-static
+-endif
+-ifeq ($(NATIVE_OS), android)
+-  EXTRA_CONFIGURE = --enable-static
+-endif
+-
+ ifeq ($(XBMCROOT),)
+   XBMCROOT = $(ROOT_DIR)/../../../..
+ endif

@@ -68,6 +68,7 @@ Source0:	http://mirrors.kodi.tv/releases/source/%{version}-%{codename}.tar.gz
 Source1:	https://github.com/xbmc/FFmpeg/archive/2.6.3-%{codename}.tar.gz
 # Source1-md5:	31c6cd81c44cce93358b6d9357772aec
 Patch0:		jpeglib-boolean.patch
+Patch1:		disable-static.patch
 Patch2:		dvdread.patch
 URL:		http://kodi.tv/
 BuildRequires:	Mesa-libGLU-devel
@@ -159,6 +160,8 @@ BuildRequires:	yajl-devel
 BuildRequires:	yasm
 BuildRequires:	zip
 BuildRequires:	zlib-devel
+# kodi uses it's own, modified squish
+BuildConflicts:	squish-devel
 #https://github.com/sahlberg/libnfs
 #BuildRequires:	libnfs-devel
 #http://sites.google.com/site/alexthepuffin/home
@@ -195,6 +198,7 @@ all common digital media files from local and network storage media.
 %prep
 %setup -q -n xbmc-%{version}-%{codename}
 %patch0 -p1
+%patch1 -p1
 %{?with_system_dvdread:%patch2 -p1}
 
 rm -r lib/cximage-6.0/zlib
