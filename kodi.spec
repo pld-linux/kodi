@@ -60,7 +60,7 @@
 Summary:	Kodi is a free and open source media-player and entertainment hub
 Name:		kodi
 Version:	15.0
-Release:	3
+Release:	4
 License:	GPL v2+ and GPL v3+
 Group:		Applications/Multimedia
 Source0:	http://mirrors.kodi.tv/releases/source/%{version}-%{codename}.tar.gz
@@ -163,7 +163,7 @@ BuildRequires:	zlib-devel
 # kodi uses it's own, modified squish
 BuildConflicts:	squish-devel
 #https://github.com/sahlberg/libnfs
-#BuildRequires:	libnfs-devel
+BuildRequires:	libnfs-devel
 #http://sites.google.com/site/alexthepuffin/home
 #BuildRequires:	afpfs-ng-devel
 #http://mirrors.xbmc.org/build-deps/darwin-libs/libshairport-1.2.0.20310_lib.tar.gz
@@ -217,6 +217,7 @@ ln -s %{SOURCE1} tools/depends/target/ffmpeg/ffmpeg-2.4.4-%{codename}.tar.gz
 %build
 ./bootstrap
 %configure \
+	ac_cv_type__Bool=yes \
 	--disable-silent-rules \
 	--disable-debug \
 	--disable-ccache \
