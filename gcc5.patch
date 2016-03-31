@@ -1,0 +1,17 @@
+diff -ur xbmc-15.0-Isengard.orig/xbmc/visualizations/XBMCProjectM/libprojectM/Common.hpp xbmc-15.0-Isengard/xbmc/visualizations/XBMCProjectM/libprojectM/Common.hpp
+--- xbmc-15.0-Isengard.orig/xbmc/visualizations/XBMCProjectM/libprojectM/Common.hpp	2015-07-22 03:41:29.000000000 +0900
++++ xbmc-15.0-Isengard/xbmc/visualizations/XBMCProjectM/libprojectM/Common.hpp	2016-03-31 21:46:24.945192642 +0900
+@@ -57,11 +57,11 @@
+ #endif
+ 			 
+ #ifdef LINUX
+-#define projectM_isnan isnan
++#define projectM_isnan std::isnan
+ #endif
+ 
+ #ifdef LINUX
+-#define projectM_isnan isnan
++#define projectM_isnan std::isnan
+ #endif
+ 
+ #ifdef WIN32
