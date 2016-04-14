@@ -56,21 +56,18 @@
 %bcond_without	system_ffmpeg	# build with system ffmpeg
 %bcond_without	system_dvdread	# build with system dvdread
 
-%define	codename Isengard
+%define	codename Jarvis
 Summary:	Kodi is a free and open source media-player and entertainment hub
 Name:		kodi
-Version:	15.0
-Release:	5
+Version:	16.0
+Release:	0.1
 License:	GPL v2+ and GPL v3+
 Group:		Applications/Multimedia
 Source0:	http://mirrors.kodi.tv/releases/source/%{version}-%{codename}.tar.gz
-# Source0-md5:	d3bd3dc9fd705bcf59d8c91199994537
-Source1:	https://github.com/xbmc/FFmpeg/archive/2.6.3-%{codename}.tar.gz
-# Source1-md5:	31c6cd81c44cce93358b6d9357772aec
+# Source0-md5:	ce887b7e831bca8843c5262313f28913
 Patch0:		jpeglib-boolean.patch
 Patch1:		disable-static.patch
 Patch2:		dvdread.patch
-Patch3:		ffmpeg3.patch
 Patch4:		gcc5.patch
 URL:		http://kodi.tv/
 BuildRequires:	Mesa-libGLU-devel
@@ -86,6 +83,7 @@ BuildRequires:	bluez-libs-devel >= 4.99
 BuildRequires:	boost-devel
 BuildRequires:	bzip2-devel
 BuildRequires:	cmake
+BuildRequires:	crossguid-devel
 BuildRequires:	curl-devel
 BuildRequires:	dbus-devel
 BuildRequires:	doxygen
@@ -202,8 +200,7 @@ all common digital media files from local and network storage media.
 %patch0 -p1
 %patch1 -p1
 %{?with_system_dvdread:%patch2 -p1}
-%patch3 -p1
-%patch4 -p1
+#%patch4 -p1
 
 rm -r lib/cximage-6.0/zlib
 #rm -r lib/libhdhomerun
@@ -215,10 +212,13 @@ rm -r lib/win32
 %{?with_system_dvdread:rm -r lib/libdvd/libdvdread}
 
 %if %{without system_ffmpeg}
-ln -s %{SOURCE1} tools/depends/target/ffmpeg/ffmpeg-2.4.4-%{codename}.tar.gz
+#ln -s %{SOURCE1} tools/depends/target/ffmpeg/ffmpeg-2.4.4-%{codename}.tar.gz
 %endif
 
 %build
+%{__make} -C tools/depends/native/libsquish-native \
+	CXX="%{__cxx}"
+
 ./bootstrap
 %configure \
 	ac_cv_type__Bool=yes \
