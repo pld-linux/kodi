@@ -68,6 +68,7 @@ Source0:	http://mirrors.kodi.tv/releases/source/%{version}-%{codename}.tar.gz
 Patch0:		jpeglib-boolean.patch
 Patch1:		disable-static.patch
 Patch2:		dvdread.patch
+Patch3:		ffmpeg3.patch
 Patch4:		gcc5.patch
 URL:		http://kodi.tv/
 BuildRequires:	Mesa-libGLU-devel
@@ -200,6 +201,7 @@ all common digital media files from local and network storage media.
 %patch0 -p1
 %patch1 -p1
 %{?with_system_dvdread:%patch2 -p1}
+%patch3 -p1
 #%patch4 -p1
 
 rm -r lib/cximage-6.0/zlib

@@ -75,9 +75,8 @@ diff -ur xbmc-15.0-Isengard.orig/xbmc/cores/dvdplayer/DVDCodecs/DVDCodecUtils.cp
 -  return PIX_FMT_NONE;
 +  return AV_PIX_FMT_NONE;
  }
-diff -ur xbmc-15.0-Isengard.orig/xbmc/cores/dvdplayer/DVDCodecs/Video/DVDVideoCodecFFmpeg.cpp xbmc-15.0-Isengard/xbmc/cores/dvdplayer/DVDCodecs/Video/DVDVideoCodecFFmpeg.cpp
---- xbmc-15.0-Isengard.orig/xbmc/cores/dvdplayer/DVDCodecs/Video/DVDVideoCodecFFmpeg.cpp	2015-07-22 03:41:29.000000000 +0900
-+++ xbmc-15.0-Isengard/xbmc/cores/dvdplayer/DVDCodecs/Video/DVDVideoCodecFFmpeg.cpp	2016-03-31 21:15:11.333627831 +0900
+--- xbmc-16.0-Jarvis/xbmc/cores/dvdplayer/DVDCodecs/Video/DVDVideoCodecFFmpeg.cpp~	2016-04-15 00:11:54.000000000 +0300
++++ xbmc-16.0-Jarvis/xbmc/cores/dvdplayer/DVDCodecs/Video/DVDVideoCodecFFmpeg.cpp	2016-04-15 00:17:02.509741123 +0300
 @@ -79,8 +79,8 @@
    STATE_SW_MULTI
  };
@@ -100,12 +99,12 @@ diff -ur xbmc-15.0-Isengard.orig/xbmc/cores/dvdplayer/DVDCodecs/Video/DVDVideoCo
    {
  #ifdef HAVE_LIBVDPAU
      if(VDPAU::CDecoder::IsVDPAUFormat(*cur) && CSettings::Get().GetBool("videoplayer.usevdpau"))
-@@ -130,7 +130,7 @@
+@@ -137,7 +137,7 @@
  #endif
  #ifdef HAVE_LIBVA
      // mpeg4 vaapi decoding is disabled
--    if(*cur == PIX_FMT_VAAPI_VLD && CSettings::Get().GetBool("videoplayer.usevaapi"))
-+    if(*cur == AV_PIX_FMT_VAAPI_VLD && CSettings::Get().GetBool("videoplayer.usevaapi"))
+-    if(*cur == PIX_FMT_VAAPI_VLD && CSettings::GetInstance().GetBool(CSettings::SETTING_VIDEOPLAYER_USEVAAPI))
++    if(*cur == AV_PIX_FMT_VAAPI_VLD && CSettings::GetInstance().GetBool(CSettings::SETTING_VIDEOPLAYER_USEVAAPI))
      {
        VAAPI::CDecoder* dec = new VAAPI::CDecoder();
        if(dec->Open(avctx, ctx->m_pCodecContext, *cur, ctx->m_uSurfacesCount) == true)
@@ -385,20 +384,6 @@ diff -ur xbmc-15.0-Isengard.orig/xbmc/cores/VideoRenderers/LinuxRendererGL.cpp x
                                                   SWS_FAST_BILINEAR | SwScaleCPUFlags(), NULL, NULL, NULL);
    uint8_t *dstTop[]    = { m_rgbBuffer, 0, 0, 0 };
    uint8_t *dstBot[]    = { m_rgbBuffer + m_sourceWidth * m_sourceHeight * 2, 0, 0, 0 };
-diff -ur xbmc-15.0-Isengard.orig/xbmc/pictures/Picture.cpp xbmc-15.0-Isengard/xbmc/pictures/Picture.cpp
---- xbmc-15.0-Isengard.orig/xbmc/pictures/Picture.cpp	2015-07-22 03:41:29.000000000 +0900
-+++ xbmc-15.0-Isengard/xbmc/pictures/Picture.cpp	2016-03-31 21:27:23.517415324 +0900
-@@ -330,8 +330,8 @@
- bool CPicture::ScaleImage(uint8_t *in_pixels, unsigned int in_width, unsigned int in_height, unsigned int in_pitch,
-                           uint8_t *out_pixels, unsigned int out_width, unsigned int out_height, unsigned int out_pitch)
- {
--  struct SwsContext *context = sws_getContext(in_width, in_height, PIX_FMT_BGRA,
--                                                         out_width, out_height, PIX_FMT_BGRA,
-+  struct SwsContext *context = sws_getContext(in_width, in_height, AV_PIX_FMT_BGRA,
-+                                                         out_width, out_height, AV_PIX_FMT_BGRA,
-                                                          SWS_FAST_BILINEAR | SwScaleCPUFlags(), NULL, NULL, NULL);
- 
-   uint8_t *src[] = { in_pixels, 0, 0, 0 };
 diff -ur xbmc-15.0-Isengard.orig/xbmc/video/FFmpegVideoDecoder.cpp xbmc-15.0-Isengard/xbmc/video/FFmpegVideoDecoder.cpp
 --- xbmc-15.0-Isengard.orig/xbmc/video/FFmpegVideoDecoder.cpp	2015-07-22 03:41:29.000000000 +0900
 +++ xbmc-15.0-Isengard/xbmc/video/FFmpegVideoDecoder.cpp	2016-03-31 21:37:37.869490415 +0900
@@ -420,3 +405,16 @@ diff -ur xbmc-15.0-Isengard.orig/xbmc/video/FFmpegVideoDecoder.cpp xbmc-15.0-Ise
  
    sws_scale( context, m_pFrame->data, m_pFrame->linesize, 0, m_pCodecCtx->height,
                                                                       m_pFrameRGB->data, m_pFrameRGB->linesize );
+--- xbmc-16.0-Jarvis/xbmc/pictures/Picture.cpp~	2016-02-20 17:21:19.000000000 +0200
++++ xbmc-16.0-Jarvis/xbmc/pictures/Picture.cpp	2016-04-15 00:56:59.263272399 +0300
+@@ -342,8 +342,8 @@
+                           uint8_t *out_pixels, unsigned int out_width, unsigned int out_height, unsigned int out_pitch,
+                           CPictureScalingAlgorithm::Algorithm scalingAlgorithm /* = CPictureScalingAlgorithm::NoAlgorithm */)
+ {
+-  struct SwsContext *context = sws_getContext(in_width, in_height, PIX_FMT_BGRA,
+-                                                         out_width, out_height, PIX_FMT_BGRA,
++  struct SwsContext *context = sws_getContext(in_width, in_height, AV_PIX_FMT_BGRA,
++                                                         out_width, out_height, AV_PIX_FMT_BGRA,
+                                                          CPictureScalingAlgorithm::ToSwscale(scalingAlgorithm) | SwScaleCPUFlags(), NULL, NULL, NULL);
+ 
+   uint8_t *src[] = { in_pixels, 0, 0, 0 };
