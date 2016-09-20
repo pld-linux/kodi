@@ -95,6 +95,7 @@ BuildRequires:	gawk
 BuildRequires:	gettext-autopoint
 BuildRequires:	gettext-tools
 BuildRequires:	giflib-devel
+%{?with_libgif:BuildRequires:	giflib-devel}
 BuildRequires:	glew-devel
 BuildRequires:	gperf
 BuildRequires:	jasper-devel
@@ -105,7 +106,6 @@ BuildRequires:	libcap-devel
 BuildRequires:	libcdio-devel
 %{?with_libcec:BuildRequires:	libcec-devel >= 2.1.0}
 %{?with_system_dvdread:BuildRequires:	libdvdread-devel}
-BuildRequires:	libgif-devel
 %ifarch i686 pentium4 athlon %{x8664}
 BuildRequires:	libcrystalhd-devel
 %endif
