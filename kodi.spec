@@ -71,8 +71,6 @@ URL:		http://kodi.tv/
 BuildRequires:	Mesa-libGLU-devel
 BuildRequires:	OpenGL-devel
 BuildRequires:	SDL2-devel
-BuildRequires:	SDL_image-devel
-BuildRequires:	SDL_mixer-devel
 BuildRequires:	alsa-lib-devel
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -112,7 +110,6 @@ BuildRequires:	libcrystalhd-devel
 BuildRequires:	libgcrypt-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	libltdl-devel
-BuildRequires:	libmad-devel
 BuildRequires:	libmicrohttpd-devel
 BuildRequires:	libmodplug-devel
 BuildRequires:	libmpeg2-devel
@@ -125,8 +122,9 @@ BuildRequires:	libsmbclient-devel
 BuildRequires:	libssh-devel
 BuildRequires:	libtiff-devel
 BuildRequires:	libtool
+BuildRequires:	libuuid-devel
 BuildRequires:	libva-devel
-BuildRequires:	libva-glx-devel
+BuildRequires:	libva-x11-devel
 BuildRequires:	libvdpau-devel
 BuildRequires:	libvorbis-devel
 BuildRequires:	libxslt-devel
@@ -151,13 +149,8 @@ BuildRequires:	udev-devel
 BuildRequires:	unzip
 BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xorg-lib-libXext-devel
-BuildRequires:	xorg-lib-libXinerama-devel
-BuildRequires:	xorg-lib-libXmu-devel
 BuildRequires:	xorg-lib-libXrandr-devel
-BuildRequires:	xorg-lib-libXt-devel
-BuildRequires:	xorg-lib-libXtst-devel
 BuildRequires:	yajl-devel
-BuildRequires:	yasm
 BuildRequires:	zip
 BuildRequires:	zlib-devel
 # kodi uses it's own, modified squish
