@@ -13,13 +13,12 @@
 %bcond_without	avahi		# Avahi support
 %bcond_without	dbus		# DBUS support
 %bcond_without	dvdcss		# DVDCSS support
-%bcond_without	fishbmc		# FishBMC visualisation
 %bcond_without	gl		# OpenGL rendering
-%bcond_without	goom		# GOOM visualisation
 %bcond_with	gtest		# configure Google Test Framework
 %bcond_without	joystick	# SDL joystick support
 %bcond_without	libcap		# libcap support
 %bcond_with	libcec		# libcec support
+%bcond_without	libgif		# gif support via libgif
 %bcond_without	libusb		# libusb support
 %bcond_with	mdnsembedded	# mDNSEmbedded support
 %bcond_without	mysql		# MySQL
@@ -29,11 +28,9 @@
 %bcond_without	optical_drive	# optical drive
 %bcond_without	projectm	# ProjectM visualisation
 %bcond_without	pulse		# PulseAudio support
-%bcond_without	rsxs		# really slick X screensavers
 %bcond_without	rtmp		# RTMP support via librtmp
 %bcond_without	samba		# SAMBA support
 %bcond_without	sdl		# SDL
-%bcond_without	spectrum	# Spectrum visualisation
 %bcond_without	ssh		# SSH SFTP support
 %bcond_without	texturepacker	# texturepacker support
 %bcond_without	udev		# udev support
@@ -41,7 +38,6 @@
 %bcond_without	vaapi		# VAAPI decoding
 %bcond_without	vdpau		# VDPAU decoding
 %bcond_with	vtbdecoder	# VTBDecoder decoding (VTB Decoder not supported on this platform)
-%bcond_without	waveform	# Waveform visualisation
 %bcond_without	webserver	# webserver
 %bcond_without	x11		# x11 'Linux Only'
 %bcond_without	xrandr		# XRandR support
@@ -104,11 +100,12 @@ BuildRequires:	gperf
 BuildRequires:	jasper-devel
 BuildRequires:	jre
 BuildRequires:	libass-devel
-BuildRequires:	libbluray-devel >= 0.2.1
+BuildRequires:	libbluray-devel >= 0.7.0
 BuildRequires:	libcap-devel
 BuildRequires:	libcdio-devel
-%{?with_libcec:BuildRequires:	libcec-devel}
+%{?with_libcec:BuildRequires:	libcec-devel >= 2.1.0}
 %{?with_system_dvdread:BuildRequires:	libdvdread-devel}
+BuildRequires:	libgif-devel
 %ifarch i686 pentium4 athlon %{x8664}
 BuildRequires:	libcrystalhd-devel
 %endif
@@ -238,15 +235,14 @@ rm -r lib/win32
 	%{__enable_disable avahi} \
 	%{__enable_disable dbus} \
 	%{__enable_disable dvdcss} \
-	%{__enable_disable fishbmc} \
 	%{__enable_disable gles} \
 	%{__enable_disable gl} \
-	%{__enable_disable goom} \
 	%{__enable_disable gtest} \
 	%{__enable_disable joystick} \
 	%{__enable_disable libbluray} \
 	%{__enable_disable libcap} \
 	%{__enable_disable libcec} \
+	%{__enable_disable libgif} \
 	%{__enable_disable libusb} \
 	%{__enable_disable mdnsembedded} \
 	%{__enable_disable mid} \
@@ -256,13 +252,10 @@ rm -r lib/win32
 	%{__enable_disable openmax} \
 	%{__enable_disable optical_drive optical-drive} \
 	%{__enable_disable profiling} \
-	%{__enable_disable projectm} \
 	%{__enable_disable pulse} \
-	%{__enable_disable rsxs} \
 	%{__enable_disable rtmp} \
 	%{__enable_disable samba} \
 	%{__enable_disable sdl} \
-	%{__enable_disable spectrum} \
 	%{__enable_disable ssh} \
 	%{__enable_disable tegra} \
 	%{__enable_disable texturepacker} \
@@ -271,7 +264,6 @@ rm -r lib/win32
 	%{__enable_disable vaapi} \
 	%{__enable_disable vdpau} \
 	%{__enable_disable vtbdecoder} \
-	%{__enable_disable waveform} \
 	%{__enable_disable wayland} \
 	%{__enable_disable webserver} \
 	%{__enable_disable x11} \
