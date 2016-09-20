@@ -88,6 +88,7 @@ BuildRequires:	cmake
 BuildRequires:	crossguid-devel
 BuildRequires:	curl-devel
 BuildRequires:	dbus-devel
+BuildRequires:	dcadec-devel
 BuildRequires:	doxygen
 %{?with_system_ffmpeg:BuildRequires:	ffmpeg-devel >= 2.4.4}
 BuildRequires:	flac-devel
