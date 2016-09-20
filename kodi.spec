@@ -59,12 +59,13 @@
 %define	codename Jarvis
 Summary:	Kodi is a free and open source media-player and entertainment hub
 Name:		kodi
-Version:	16.0
+Version:	16.1
 Release:	0.1
 License:	GPL v2+ and GPL v3+
 Group:		Applications/Multimedia
-Source0:	http://mirrors.kodi.tv/releases/source/%{version}-%{codename}.tar.gz
-# Source0-md5:	ce887b7e831bca8843c5262313f28913
+#Source0:	http://mirrors.kodi.tv/releases/source/%{version}-%{codename}.tar.gz
+Source0:	https://github.com/xbmc/xbmc/archive/%{version}-%{codename}.tar.gz
+# Source0-md5:	79358ad5f77f42c5498a9412d5a78dd5
 Patch0:		jpeglib-boolean.patch
 Patch1:		disable-static.patch
 Patch2:		dvdread.patch
