@@ -1,17 +1,38 @@
-diff -ur xbmc-15.0-Isengard.orig/xbmc/visualizations/XBMCProjectM/libprojectM/Common.hpp xbmc-15.0-Isengard/xbmc/visualizations/XBMCProjectM/libprojectM/Common.hpp
---- xbmc-15.0-Isengard.orig/xbmc/visualizations/XBMCProjectM/libprojectM/Common.hpp	2015-07-22 03:41:29.000000000 +0900
-+++ xbmc-15.0-Isengard/xbmc/visualizations/XBMCProjectM/libprojectM/Common.hpp	2016-03-31 21:46:24.945192642 +0900
-@@ -57,11 +57,11 @@
- #endif
- 			 
- #ifdef LINUX
--#define projectM_isnan isnan
-+#define projectM_isnan std::isnan
- #endif
+--- xbmc-16.1-Jarvis/xbmc/filesystem/FTPParse.cpp.orig	2016-04-24 08:48:30.000000000 +0200
++++ xbmc-16.1-Jarvis/xbmc/filesystem/FTPParse.cpp	2017-12-11 17:11:03.079955624 +0100
+@@ -34,6 +34,8 @@
+ #include <cmath>
+ #include "FTPParse.h"
  
- #ifdef LINUX
--#define projectM_isnan isnan
-+#define projectM_isnan std::isnan
- #endif
++using std::string;
++
+ CFTPParse::CFTPParse()
+ {
+   m_flagtrycwd = 0;
+--- xbmc-16.1-Jarvis/lib/cximage-6.0/CxImage/ximadsp.cpp.orig	2016-04-24 08:48:30.000000000 +0200
++++ xbmc-16.1-Jarvis/lib/cximage-6.0/CxImage/ximadsp.cpp	2017-12-11 18:34:55.026753161 +0100
+@@ -3,12 +3,14 @@
+  * CxImage version 6.0.0 02/Feb/2008
+  */
  
- #ifdef WIN32
++#if CXIMAGE_SUPPORT_DSP
++// include <queue> before any local headers, as they define min/max as macros
++#include <queue>
++
+ #include "ximage.h"
+ 
+ #include "ximaiter.h"
+ 
+-#if CXIMAGE_SUPPORT_DSP
+-
+ ////////////////////////////////////////////////////////////////////////////////
+ /**
+  * Converts the image to B&W.
+@@ -3477,7 +3479,6 @@
+ }
+ 
+ ////////////////////////////////////////////////////////////////////////////////
+-#include <queue>
+ ////////////////////////////////////////////////////////////////////////////////
+ /**
+  * Flood Fill

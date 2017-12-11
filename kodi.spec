@@ -56,7 +56,7 @@
 Summary:	Kodi is a free and open source media-player and entertainment hub
 Name:		kodi
 Version:	16.1
-Release:	1
+Release:	2
 License:	GPL v2+ and GPL v3+
 Group:		Applications/Multimedia
 #Source0:	http://mirrors.kodi.tv/releases/source/%{version}-%{codename}.tar.gz
@@ -68,11 +68,11 @@ Patch2:		dvdread.patch
 Patch3:		ffmpeg3.patch
 Patch4:		gcc5.patch
 URL:		http://kodi.tv/
-BuildRequires:	Mesa-libGLU-devel
+BuildRequires:	OpenGL-GLU-devel
 BuildRequires:	OpenGL-devel
 BuildRequires:	SDL2-devel
 BuildRequires:	alsa-lib-devel
-BuildRequires:	autoconf
+BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake
 BuildRequires:	avahi-devel
 BuildRequires:	bluez-libs-devel >= 4.99
@@ -84,6 +84,7 @@ BuildRequires:	curl-devel
 BuildRequires:	dbus-devel
 BuildRequires:	dcadec-devel
 BuildRequires:	doxygen
+# libavcodec >= 56.26.100 libavfilter >= 5.11.102 libavformat >= 56.25.101 libavutil >= 54.20.100 libpostproc >= 53.3.100 libswscale >= 3.1.101 libswresample >= 1.1.100
 %{?with_system_ffmpeg:BuildRequires:	ffmpeg-devel >= 2.4.4}
 BuildRequires:	flac-devel
 BuildRequires:	fontconfig-devel
@@ -102,7 +103,8 @@ BuildRequires:	libass-devel
 BuildRequires:	libbluray-devel >= 0.7.0
 BuildRequires:	libcap-devel
 BuildRequires:	libcdio-devel
-%{?with_libcec:BuildRequires:	libcec-devel >= 2.1.0}
+%{?with_libcec:BuildRequires:	libcec-devel >= 3.0.0}
+BuildRequires:	libdrm-devel
 %{?with_system_dvdread:BuildRequires:	libdvdread-devel}
 %ifarch i686 pentium4 athlon %{x8664}
 BuildRequires:	libcrystalhd-devel
@@ -120,6 +122,7 @@ BuildRequires:	librtmp-devel
 BuildRequires:	libsamplerate-devel
 BuildRequires:	libsmbclient-devel
 BuildRequires:	libssh-devel
+BuildRequires:	libstdc++-devel
 BuildRequires:	libtiff-devel
 BuildRequires:	libtool
 BuildRequires:	libuuid-devel
@@ -127,6 +130,7 @@ BuildRequires:	libva-devel
 BuildRequires:	libva-x11-devel
 BuildRequires:	libvdpau-devel
 BuildRequires:	libvorbis-devel
+BuildRequires:	libxml2-devel >= 2.0
 BuildRequires:	libxslt-devel
 BuildRequires:	lzo-devel
 BuildRequires:	mysql-devel
@@ -136,21 +140,21 @@ BuildRequires:	nasm
 BuildRequires:	openssl-devel
 BuildRequires:	pcre-cxx-devel
 BuildRequires:	pkgconfig
-BuildRequires:	pulseaudio-devel
-BuildRequires:	python-devel >= 2.4
+BuildRequires:	pulseaudio-devel >= 1.0
+BuildRequires:	python-devel >= 1:2.6
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.566
 BuildRequires:	sed >= 4.0
 BuildRequires:	sqlite3-devel
 BuildRequires:	swig
 BuildRequires:	taglib-devel >= 1.8
-BuildRequires:	tinyxml-devel
+BuildRequires:	tinyxml-devel >= 2.6.2
 BuildRequires:	udev-devel
 BuildRequires:	unzip
 BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xorg-lib-libXext-devel
 BuildRequires:	xorg-lib-libXrandr-devel
-BuildRequires:	yajl-devel
+BuildRequires:	yajl-devel >= 2
 BuildRequires:	zip
 BuildRequires:	zlib-devel
 # kodi uses it's own, modified squish
@@ -159,9 +163,7 @@ BuildConflicts:	squish-devel
 BuildRequires:	libnfs-devel
 #http://sites.google.com/site/alexthepuffin/home
 #BuildRequires:	afpfs-ng-devel
-#http://mirrors.xbmc.org/build-deps/darwin-libs/libshairport-1.2.0.20310_lib.tar.gz
-#https://github.com/albertz/shairport
-#BuildRequires: libshairport
+#BuildRequires:	shairplay-devel
 Requires:	/usr/bin/glxinfo
 Requires:	SDL >= 1.2.14-5
 Requires:	lsb-release
@@ -194,16 +196,16 @@ all common digital media files from local and network storage media.
 %patch1 -p1
 %{?with_system_dvdread:%patch2 -p1}
 %patch3 -p1
-#%patch4 -p1
+%patch4 -p1
 
-rm -r lib/cximage-6.0/zlib
-#rm -r lib/libhdhomerun
-rm -r lib/libmpeg2
-rm -r xbmc/cores/dvdplayer/DVDCodecs/Video/libmpeg2
-rm -r lib/libbluray
-rm -r lib/librtmp
-rm -r lib/win32
-%{?with_system_dvdread:rm -r lib/libdvd/libdvdread}
+%{__rm} -r lib/cximage-6.0/zlib
+#%{__rm} -r lib/libhdhomerun
+%{__rm} -r lib/libmpeg2
+%{__rm} -r xbmc/cores/dvdplayer/DVDCodecs/Video/libmpeg2
+%{__rm} -r lib/libbluray
+%{__rm} -r lib/librtmp
+%{__rm} -r lib/win32
+%{?with_system_dvdread:%{__rm} -r lib/libdvd/libdvdread}
 
 %if %{without system_ffmpeg}
 #ln -s %{SOURCE1} tools/depends/target/ffmpeg/ffmpeg-2.4.4-%{codename}.tar.gz
