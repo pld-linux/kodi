@@ -52,16 +52,16 @@
 %bcond_without	system_ffmpeg	# build with system ffmpeg
 %bcond_without	system_dvdread	# build with system dvdread
 
-%define	codename Jarvis
+%define	codename Krypton
 Summary:	Kodi is a free and open source media-player and entertainment hub
 Name:		kodi
-Version:	16.1
-Release:	2
+Version:	17.6
+Release:	0.1
 License:	GPL v2+ and GPL v3+
 Group:		Applications/Multimedia
 #Source0:	http://mirrors.kodi.tv/releases/source/%{version}-%{codename}.tar.gz
 Source0:	https://github.com/xbmc/xbmc/archive/%{version}-%{codename}.tar.gz
-# Source0-md5:	79358ad5f77f42c5498a9412d5a78dd5
+# Source0-md5:	a64c2fc56ddc41b9b0dded55eaabf170
 Patch0:		jpeglib-boolean.patch
 Patch1:		disable-static.patch
 Patch2:		dvdread.patch
@@ -192,17 +192,17 @@ all common digital media files from local and network storage media.
 
 %prep
 %setup -q -n xbmc-%{version}-%{codename}
-%patch0 -p1
+#%patch0 -p1
 %patch1 -p1
 %{?with_system_dvdread:%patch2 -p1}
-%patch3 -p1
-%patch4 -p1
+#%patch3 -p1
+#%patch4 -p1
 
-%{__rm} -r lib/cximage-6.0/zlib
+#%{__rm} -r lib/cximage-6.0/zlib
 #%{__rm} -r lib/libhdhomerun
-%{__rm} -r lib/libmpeg2
-%{__rm} -r xbmc/cores/dvdplayer/DVDCodecs/Video/libmpeg2
-%{__rm} -r lib/libbluray
+#%{__rm} -r lib/libmpeg2
+#%{__rm} -r xbmc/cores/dvdplayer/DVDCodecs/Video/libmpeg2
+#%{__rm} -r lib/libbluray
 %{__rm} -r lib/librtmp
 %{__rm} -r lib/win32
 %{?with_system_dvdread:%{__rm} -r lib/libdvd/libdvdread}

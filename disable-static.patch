@@ -1,5 +1,5 @@
---- xbmc-15.0-Isengard/tools/depends/native/TexturePacker/Makefile~	2015-07-21 20:41:29.000000000 +0200
-+++ xbmc-15.0-Isengard/tools/depends/native/TexturePacker/Makefile	2015-07-30 18:37:38.691977581 +0200
+--- xbmc-17.6-Krypton/tools/depends/native/TexturePacker/Makefile~	2017-11-14 18:55:01.000000000 +0200
++++ xbmc-17.6-Krypton/tools/depends/native/TexturePacker/Makefile	2017-12-24 18:05:39.101238711 +0200
 @@ -9,18 +9,10 @@
  
  ifeq ($(NATIVEPLATFORM),)
@@ -16,6 +16,6 @@
 -  EXTRA_CONFIGURE = --enable-static
 -endif
 -
- ifeq ($(XBMCROOT),)
-   XBMCROOT = $(ROOT_DIR)/../../../..
+ ifeq ($(CORE_SOURCE_DIR),)
+   CORE_SOURCE_DIR = $(ROOT_DIR)/../../../..
  endif
