@@ -55,6 +55,7 @@
 %define	codename Jarvis
 Summary:	Kodi is a free and open source media-player and entertainment hub
 Name:		kodi
+# for 17.x see dev-17.6 branch
 Version:	16.1
 Release:	3
 License:	GPL v2+ and GPL v3+
