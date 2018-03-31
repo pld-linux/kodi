@@ -194,7 +194,7 @@ all common digital media files from local and network storage media.
 %setup -q -n xbmc-%{version}-%{codename}
 #%patch0 -p1
 %patch1 -p1
-%{?with_system_dvdread:%patch2 -p1}
+#%{?with_system_dvdread:%patch2 -p1}
 #%patch3 -p1
 #%patch4 -p1
 
@@ -203,17 +203,17 @@ all common digital media files from local and network storage media.
 #%{__rm} -r lib/libmpeg2
 #%{__rm} -r xbmc/cores/dvdplayer/DVDCodecs/Video/libmpeg2
 #%{__rm} -r lib/libbluray
-%{__rm} -r lib/librtmp
+#%{__rm} -r lib/librtmp
 %{__rm} -r lib/win32
-%{?with_system_dvdread:%{__rm} -r lib/libdvd/libdvdread}
+#%{?with_system_dvdread:%{__rm} -r lib/libdvd/libdvdread}
 
 %if %{without system_ffmpeg}
 #ln -s %{SOURCE1} tools/depends/target/ffmpeg/ffmpeg-2.4.4-%{codename}.tar.gz
 %endif
 
 %build
-%{__make} -C tools/depends/native/libsquish-native \
-	CXX="%{__cxx}"
+#%{__make} -C tools/depends/native/libsquish-native \
+#	CXX="%{__cxx}"
 
 ./bootstrap
 %configure \
