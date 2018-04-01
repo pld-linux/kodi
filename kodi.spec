@@ -82,6 +82,7 @@ BuildRequires:	cmake >= 3.4
 BuildRequires:	crossguid-devel
 BuildRequires:	curl-devel
 BuildRequires:	dbus-devel
+BuildRequires:	libfmt-devel >= 3.0.1
 # libavcodec >= 56.26.100 libavfilter >= 5.11.102 libavformat >= 56.25.101 libavutil >= 54.20.100 libpostproc >= 53.3.100 libswscale >= 3.1.101 libswresample >= 1.1.100
 %{?with_system_ffmpeg:BuildRequires:	ffmpeg-devel >= 2.4.4}
 BuildRequires:	flac-devel
