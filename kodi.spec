@@ -75,12 +75,10 @@ BuildRequires:	OpenGL-GLU-devel
 BuildRequires:	OpenGL-devel
 BuildRequires:	SDL2-devel
 BuildRequires:	alsa-lib-devel
-BuildRequires:	autoconf >= 2.59
-BuildRequires:	automake
 BuildRequires:	avahi-devel
 BuildRequires:	bluez-libs-devel >= 4.99
 BuildRequires:	bzip2-devel
-BuildRequires:	cmake
+BuildRequires:	cmake >= 3.4
 BuildRequires:	crossguid-devel
 BuildRequires:	curl-devel
 BuildRequires:	dbus-devel
@@ -206,10 +204,10 @@ all common digital media files from local and network storage media.
 %endif
 
 %build
-#%{__make} -C tools/depends/native/libsquish-native \
-#	CXX="%{__cxx}"
-
-./bootstrap
+install -d build
+cd build
+%cmake ..
+%if 0
 %configure \
 	ac_cv_type__Bool=yes \
 	--disable-silent-rules \
@@ -258,12 +256,13 @@ all common digital media files from local and network storage media.
 	%{__enable_disable x11} \
 	%{__enable_disable xrandr} \
 	%{nil}
+%endif
 
-%{__make} V=1
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-%{__make} install \
+%{__make} -C build install \
 	DESTDIR=$RPM_BUILD_ROOT
 
 %{__rm} -r $RPM_BUILD_ROOT%{_docdir}/%{name}
