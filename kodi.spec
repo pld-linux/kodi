@@ -68,6 +68,7 @@ Patch2:		dvdread.patch
 Patch3:		ffmpeg3.patch
 Patch4:		gcc5.patch
 URL:		http://kodi.tv/
+BuildRequires:	Mesa-libEGL-devel
 BuildRequires:	OpenGL-GLU-devel
 BuildRequires:	OpenGL-devel
 BuildRequires:	SDL2-devel
@@ -100,6 +101,7 @@ BuildRequires:	gperf
 BuildRequires:	jasper-devel
 BuildRequires:	jre
 BuildRequires:	libass-devel
+BuildRequires:	libatomic-devel
 BuildRequires:	libbluray-devel >= 0.7.0
 BuildRequires:	libcap-devel
 BuildRequires:	libcdio-devel
