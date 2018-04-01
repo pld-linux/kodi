@@ -52,16 +52,17 @@
 %bcond_without	system_ffmpeg	# build with system ffmpeg
 %bcond_with	system_dvdread	# build with system dvdread
 
-%define	codename Krypton
+%define	codename Leia
+%define	subver	a1
 Summary:	Kodi is a free and open source media-player and entertainment hub
 Name:		kodi
-Version:	17.6
-Release:	1
+Version:	18.0
+Release:	0.1
 License:	GPL v2+ and GPL v3+
 Group:		Applications/Multimedia
 #Source0:	http://mirrors.kodi.tv/releases/source/%{version}-%{codename}.tar.gz
-Source0:	https://github.com/xbmc/xbmc/archive/%{version}-%{codename}.tar.gz
-# Source0-md5:	a64c2fc56ddc41b9b0dded55eaabf170
+Source0:	https://github.com/xbmc/xbmc/archive/%{version}%{subver}-%{codename}.tar.gz
+# Source0-md5:	c1ae435c2d674262cee9a06791ba94bc
 Patch0:		jpeglib-boolean.patch
 Patch1:		disable-static.patch
 Patch2:		dvdread.patch
@@ -183,7 +184,7 @@ and view most videos, music, such as podcasts from the internet, and
 all common digital media files from local and network storage media.
 
 %prep
-%setup -q -n xbmc-%{version}-%{codename}
+%setup -q -n xbmc-%{version}%{?subver}-%{codename}
 #%patch0 -p1
 %patch1 -p1
 %{?with_system_dvdread:%patch2 -p1}
