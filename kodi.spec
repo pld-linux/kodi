@@ -78,14 +78,11 @@ BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake
 BuildRequires:	avahi-devel
 BuildRequires:	bluez-libs-devel >= 4.99
-BuildRequires:	boost-devel
 BuildRequires:	bzip2-devel
 BuildRequires:	cmake
 BuildRequires:	crossguid-devel
 BuildRequires:	curl-devel
 BuildRequires:	dbus-devel
-BuildRequires:	dcadec-devel
-BuildRequires:	doxygen
 # libavcodec >= 56.26.100 libavfilter >= 5.11.102 libavformat >= 56.25.101 libavutil >= 54.20.100 libpostproc >= 53.3.100 libswscale >= 3.1.101 libswresample >= 1.1.100
 %{?with_system_ffmpeg:BuildRequires:	ffmpeg-devel >= 2.4.4}
 BuildRequires:	flac-devel
@@ -97,10 +94,9 @@ BuildRequires:	gettext-autopoint
 BuildRequires:	gettext-tools
 BuildRequires:	giflib-devel
 %{?with_libgif:BuildRequires:	giflib-devel}
-BuildRequires:	glew-devel
 BuildRequires:	gperf
-BuildRequires:	jasper-devel
 BuildRequires:	jre
+BuildRequires:	lcms2-devel
 BuildRequires:	libass-devel
 BuildRequires:	libatomic-devel
 BuildRequires:	libbluray-devel >= 0.7.0
@@ -109,24 +105,17 @@ BuildRequires:	libcdio-devel
 %{?with_libcec:BuildRequires:	libcec-devel >= 3.0.0}
 BuildRequires:	libdrm-devel
 %{?with_system_dvdread:BuildRequires:	libdvdread-devel}
-%ifarch i686 pentium4 athlon %{x8664}
-BuildRequires:	libcrystalhd-devel
-%endif
 BuildRequires:	libgcrypt-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	libltdl-devel
 BuildRequires:	libmicrohttpd-devel
-BuildRequires:	libmodplug-devel
-BuildRequires:	libmpeg2-devel
 BuildRequires:	libogg-devel
 BuildRequires:	libplist-devel
 BuildRequires:	libpng-devel
 BuildRequires:	librtmp-devel
-BuildRequires:	libsamplerate-devel
 BuildRequires:	libsmbclient-devel
 BuildRequires:	libssh-devel
 BuildRequires:	libstdc++-devel
-BuildRequires:	libtiff-devel
 BuildRequires:	libtool
 BuildRequires:	libuuid-devel
 BuildRequires:	libva-devel
