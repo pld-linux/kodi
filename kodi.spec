@@ -50,7 +50,7 @@
 %bcond_with	wayland		# wayland
 # System libs:
 %bcond_without	system_ffmpeg	# build with system ffmpeg
-%bcond_without	system_dvdread	# build with system dvdread
+%bcond_with	system_dvdread	# build with system dvdread
 
 %define	codename Krypton
 Summary:	Kodi is a free and open source media-player and entertainment hub
@@ -67,6 +67,7 @@ Patch1:		disable-static.patch
 Patch2:		dvdread.patch
 Patch3:		ffmpeg3.patch
 Patch4:		gcc5.patch
+Patch5:		libdvd.patch
 URL:		http://kodi.tv/
 BuildRequires:	Mesa-libEGL-devel
 BuildRequires:	OpenGL-GLU-devel
@@ -196,9 +197,10 @@ all common digital media files from local and network storage media.
 %setup -q -n xbmc-%{version}-%{codename}
 #%patch0 -p1
 %patch1 -p1
-#%{?with_system_dvdread:%patch2 -p1}
+%{?with_system_dvdread:%patch2 -p1}
 #%patch3 -p1
 #%patch4 -p1
+%{!?with_system_dvdread:%patch5 -p1}
 
 #%{__rm} -r lib/cximage-6.0/zlib
 #%{__rm} -r lib/libhdhomerun
