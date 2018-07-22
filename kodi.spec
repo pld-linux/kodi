@@ -208,7 +208,11 @@ all common digital media files from local and network storage media.
 %build
 install -d build
 cd build
-%cmake ..
+# cmake not picking up include path from pkgconfig
+# https://trac.kodi.tv/ticket/16861
+%define	specflags -I/usr/include/freetype2
+%cmake \
+	..
 %if 0
 %configure \
 	ac_cv_type__Bool=yes \
