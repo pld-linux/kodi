@@ -217,6 +217,7 @@ cd build
 # https://trac.kodi.tv/ticket/16861
 %define	specflags -I/usr/include/freetype2
 %cmake \
+	-DENABLE_INTERNAL_CROSSGUID=OFF \
 	..
 %if 0
 %configure \
