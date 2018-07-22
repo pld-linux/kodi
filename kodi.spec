@@ -271,15 +271,13 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} -C build install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-%{__rm} -r $RPM_BUILD_ROOT%{_docdir}/%{name}
+%{__rm} $RPM_BUILD_ROOT%{_docdir}/{version.txt,copying.txt,README.linux,LICENSE.GPL}
+
+# not packaged
+%{__rm} $RPM_BUILD_ROOT%{_prefix}/lib/firewalld/services/kodi-*.xml
 
 # no -devel package yet
 %{__rm} -r $RPM_BUILD_ROOT%{_includedir}/kodi
-%{__rm} -r $RPM_BUILD_ROOT%{_includedir}/xbmc
-
-# no real use for symlinks to datadir, and make rpm packaging more difficult (symlink vs dir issues)
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/xbmc
-%{__rm} $RPM_BUILD_ROOT%{_datadir}/xbmc
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -287,6 +285,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc README.md docs/README.linux
+%attr(755,root,root) %{_bindir}/TexturePacker
 %attr(755,root,root) %{_bindir}/kodi
 %attr(755,root,root) %{_bindir}/kodi-standalone
 %{_datadir}/%{name}
@@ -294,8 +293,3 @@ rm -rf $RPM_BUILD_ROOT
 %{_desktopdir}/kodi.desktop
 %{_iconsdir}/hicolor/*/apps/%{name}.png
 %{_datadir}/xsessions/kodi.desktop
-
-# legacy xbmc compatibility links
-%attr(755,root,root) %{_bindir}/xbmc
-%attr(755,root,root) %{_bindir}/xbmc-standalone
-%{_datadir}/xsessions/xbmc.desktop
