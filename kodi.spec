@@ -174,6 +174,11 @@ Requires:	libvorbis
 Obsoletes:	xbmc < 14.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
+# extracting debug info from /home/users/glen/tmp/kodi-18.0-root-glen/usr/lib64/kodi/kodi-x11
+# /usr/lib/rpm/bin/debugedit: canonicalization unexpectedly shrank by one character
+%define		_noautostrip    kodi-x11
+%define		_enable_debug_packages	0
+
 %description
 Kodi Entertainment Center (formerly XBMC) is a free and open-source
 media player software developed by the XBMC Foundation, a non-profit
