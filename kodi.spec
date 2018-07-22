@@ -55,6 +55,7 @@
 %define	codename Krypton
 Summary:	Kodi is a free and open source media-player and entertainment hub
 Name:		kodi
+# 18.x being prepared on dev-18-leia branch
 Version:	17.6
 Release:	2
 License:	GPL v2+ and GPL v3+
