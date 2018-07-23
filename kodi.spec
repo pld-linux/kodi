@@ -218,6 +218,7 @@ cd build
 # https://trac.kodi.tv/ticket/16861
 %define	specflags -I/usr/include/freetype2
 %cmake \
+	-DENABLE_INTERNAL_LIBDVD=OFF \
 	-DENABLE_INTERNAL_CROSSGUID=OFF \
 	-DENABLE_DVDCSS=%{__true_false dvdcss} \
 	..
