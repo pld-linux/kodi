@@ -1,23 +1,8 @@
-https://github.com/rpmfusion/kodi/blob/cc71d3dd5f52950f6237cd6196c90d5de4d5140b/kodi-17a2-libdvd.patch
-
---- a/Makefile.in	2016-06-30 14:18:13.000000000 -0500
-+++ b/Makefile.in	2016-07-30 12:23:17.468082870 -0500
-@@ -10,8 +10,7 @@
- 	tools/EventClients
- 
- DVDPCODECS_DIRS= \
--	lib \
--	lib/libdvd
-+	lib
- 
- VideoPlayer_ARCHIVES=xbmc/cores/VideoPlayer/VideoPlayer.a \
-                    xbmc/cores/VideoPlayer/DVDCodecs/DVDCodecs.a \
-@@ -343,7 +342,6 @@
- 	$(MAKE) -C lib/addons/library.xbmc.pvr
- 	$(MAKE) -C lib/addons/library.kodi.inputstream
- dvdpcodecs: dllloader
--	$(MAKE) -C lib/libdvd
- 
- dvdpextcodecs:
- 
-
+--- xbmc-18.0a2-Leia/cmake/modules/FindLibDvd.cmake	2018-06-21 14:07:40.000000000 +0300
++++ xbmc-18.0a2-Leia/cmake/modules/FindLibDvd.cmake	2018-07-23 08:07:01.660838388 +0300
+@@ -1,4 +1,4 @@
+-if(KODI_DEPENDSBUILD)
++if(BUILD_INTERNAL_DVD OR KODI_DEPENDSBUILD)
+   set(_dvdlibs dvdread dvdnav)
+   set(_handlevars LIBDVD_INCLUDE_DIRS DVDREAD_LIBRARY DVDNAV_LIBRARY)
+   if(ENABLE_DVDCSS)

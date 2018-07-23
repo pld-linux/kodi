@@ -105,6 +105,7 @@ BuildRequires:	libcap-devel
 BuildRequires:	libcdio-devel
 %{?with_libcec:BuildRequires:	libcec-devel >= 3.0.0}
 BuildRequires:	libdrm-devel
+BuildRequires:	libdvdcss-devel >= 1.4.1
 %{?with_system_dvdread:BuildRequires:	libdvdread-devel}
 BuildRequires:	libgcrypt-devel
 BuildRequires:	libjpeg-devel
@@ -195,7 +196,7 @@ all common digital media files from local and network storage media.
 %{?with_system_dvdread:%patch2 -p1}
 #%patch3 -p1
 #%patch4 -p1
-#%{!?with_system_dvdread:%patch5 -p1}
+%patch5 -p1
 
 #%{__rm} -r lib/cximage-6.0/zlib
 #%{__rm} -r lib/libhdhomerun
@@ -218,6 +219,7 @@ cd build
 %define	specflags -I/usr/include/freetype2
 %cmake \
 	-DENABLE_INTERNAL_CROSSGUID=OFF \
+	-DENABLE_DVDCSS=%{__true_false dvdcss} \
 	..
 %if 0
 %configure \
@@ -233,7 +235,6 @@ cd build
 	%{__enable_disable asap_codec asap-codec} \
 	%{__enable_disable avahi} \
 	%{__enable_disable dbus} \
-	%{__enable_disable dvdcss} \
 	%{__enable_disable gles} \
 	%{__enable_disable gl} \
 	%{__enable_disable gtest} \
