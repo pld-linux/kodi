@@ -110,7 +110,7 @@ BuildRequires:	libdvdcss-devel >= 1.4.1
 BuildRequires:	libgcrypt-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	libltdl-devel
-BuildRequires:	libmicrohttpd-devel
+BuildRequires:	libmicrohttpd-devel >= 0.9.40
 BuildRequires:	libogg-devel
 BuildRequires:	libplist-devel
 BuildRequires:	libpng-devel
