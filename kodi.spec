@@ -53,7 +53,7 @@
 %bcond_with	system_dvdread	# build with system dvdread
 
 %define	codename Leia
-%define	subver	a2
+%define	subver	a3
 Summary:	Kodi is a free and open source media-player and entertainment hub
 Name:		kodi
 Version:	18.0
@@ -62,7 +62,7 @@ License:	GPL v2+ and GPL v3+
 Group:		Applications/Multimedia
 #Source0:	http://mirrors.kodi.tv/releases/source/%{version}-%{codename}.tar.gz
 Source0:	https://github.com/xbmc/xbmc/archive/%{version}%{subver}-%{codename}.tar.gz
-# Source0-md5:	6e2262d8b38d4ed28f0b102e51eb9a8e
+# Source0-md5:	bc912304c3c0bcfd63f85b5d2642972d
 Patch0:		jpeglib-boolean.patch
 Patch1:		disable-static.patch
 Patch2:		dvdread.patch
@@ -131,6 +131,7 @@ BuildRequires:	mysql-devel
 %ifarch %{ix86}
 BuildRequires:	nasm
 %endif
+BuildRequires:	fstrcmp-devel >= 0.7
 BuildRequires:	openssl-devel
 BuildRequires:	pcre-cxx-devel
 BuildRequires:	pkgconfig
@@ -279,7 +280,7 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} -C build install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-%{__rm} $RPM_BUILD_ROOT%{_docdir}/{version.txt,copying.txt,README.linux,LICENSE.GPL}
+%{__rm} $RPM_BUILD_ROOT%{_docdir}/{version.txt,README.Linux.md,LICENSE.md}
 
 # not packaged
 %{__rm} $RPM_BUILD_ROOT%{_prefix}/lib/firewalld/services/kodi-*.xml
@@ -292,7 +293,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README.md docs/README.linux
+%doc README.md docs/README.Linux.md
 %attr(755,root,root) %{_bindir}/TexturePacker
 %attr(755,root,root) %{_bindir}/kodi
 %attr(755,root,root) %{_bindir}/kodi-standalone
