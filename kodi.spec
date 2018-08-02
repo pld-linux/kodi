@@ -222,6 +222,10 @@ cd build
 	-DENABLE_INTERNAL_LIBDVD=OFF \
 	-DENABLE_INTERNAL_CROSSGUID=OFF \
 	-DENABLE_DVDCSS=%{__true_false dvdcss} \
+	-DENABLE_UPNP=%{__true_false upnp} \
+	-DENABLE_AIRTUNES=%{__true_false airtunes} \
+	-DENABLE_OPTICAL=%{__true_false optical_drive} \
+	-DENABLE_INTERNAL_FFMPEG=%{!?with_system_ffmpeg:ON}%{?with_system_ffmpeg:OFF} \
 	..
 %if 0
 %configure \
@@ -232,7 +236,6 @@ cd build
 	--with-ffmpeg=%{!?with_system_ffmpeg:force}%{?with_system_ffmpeg:shared} \
 	%{__enable_disable afpclient} \
 	%{__enable_disable airplay} \
-	%{__enable_disable airtunes} \
 	%{__enable_disable alsa} \
 	%{__enable_disable asap_codec asap-codec} \
 	%{__enable_disable avahi} \
@@ -252,7 +255,6 @@ cd build
 	%{__enable_disable nfs} \
 	%{__enable_disable non_free non-free} \
 	%{__enable_disable openmax} \
-	%{__enable_disable optical_drive optical-drive} \
 	%{__enable_disable profiling} \
 	%{__enable_disable pulse} \
 	%{__enable_disable rtmp} \
