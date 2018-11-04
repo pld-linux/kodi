@@ -57,7 +57,7 @@ Summary:	Kodi is a free and open source media-player and entertainment hub
 Name:		kodi
 # 18.x being prepared on dev-18-leia branch
 Version:	17.6
-Release:	2
+Release:	3
 License:	GPL v2+ and GPL v3+
 Group:		Applications/Multimedia
 #Source0:	http://mirrors.kodi.tv/releases/source/%{version}-%{codename}.tar.gz
