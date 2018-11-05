@@ -57,7 +57,7 @@ Summary:	Kodi is a free and open source media-player and entertainment hub
 Name:		kodi
 # 18.x being prepared on dev-18-leia branch
 Version:	17.6
-Release:	3
+Release:	3.1
 License:	GPL v2+ and GPL v3+
 Group:		Applications/Multimedia
 #Source0:	http://mirrors.kodi.tv/releases/source/%{version}-%{codename}.tar.gz
@@ -70,6 +70,7 @@ Patch3:		ffmpeg3.patch
 Patch4:		gcc5.patch
 Patch5:		libdvd.patch
 Patch6:		ffmpeg4.patch
+Patch7:		wrapper.c.patch
 URL:		http://kodi.tv/
 BuildRequires:	Mesa-libEGL-devel
 BuildRequires:	OpenGL-GLU-devel
@@ -193,6 +194,7 @@ all common digital media files from local and network storage media.
 #%patch4 -p1
 %{!?with_system_dvdread:%patch5 -p1}
 %patch6 -p1
+%patch7 -p1
 
 #%{__rm} -r lib/cximage-6.0/zlib
 #%{__rm} -r lib/libhdhomerun
