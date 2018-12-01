@@ -53,7 +53,7 @@
 %bcond_with	system_dvdread	# build with system dvdread
 
 %define	codename Leia
-%define	subver	b4
+%define	subver	rc1
 Summary:	Kodi is a free and open source media-player and entertainment hub
 Name:		kodi
 Version:	18.0
@@ -62,7 +62,7 @@ License:	GPL v2+ and GPL v3+
 Group:		Applications/Multimedia
 #Source0:	http://mirrors.kodi.tv/releases/source/%{version}-%{codename}.tar.gz
 Source0:	https://github.com/xbmc/xbmc/archive/%{version}%{subver}-%{codename}.tar.gz
-# Source0-md5:	af10526f9852570b552cbe66b11af0c1
+# Source0-md5:	150a7fffc5ca611904005ba6445c7bf4
 Patch0:		jpeglib-boolean.patch
 Patch1:		disable-static.patch
 Patch2:		dvdread.patch
