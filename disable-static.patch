@@ -1,12 +1,13 @@
---- xbmc-17.6-Krypton/tools/depends/native/TexturePacker/Makefile~	2017-11-14 18:55:01.000000000 +0200
-+++ xbmc-17.6-Krypton/tools/depends/native/TexturePacker/Makefile	2017-12-24 18:05:39.101238711 +0200
-@@ -9,18 +9,10 @@
+--- xbmc-18.0a1-Leia/tools/depends/native/TexturePacker/Makefile~	2018-03-04 11:21:28.000000000 +0200
++++ xbmc-18.0a1-Leia/tools/depends/native/TexturePacker/Makefile	2018-04-01 16:45:56.499884518 +0300
+@@ -10,19 +10,11 @@
  
  ifeq ($(NATIVEPLATFORM),)
    PLATFORM = native
 -  EXTRA_CONFIGURE = --enable-static
  else
    PLATFORM = $(NATIVEPLATFORM)
+   DEPS += ../../Makefile.include
  endif
  
 -ifeq ($(NATIVE_OS), linux)
@@ -16,6 +17,6 @@
 -  EXTRA_CONFIGURE = --enable-static
 -endif
 -
- ifeq ($(CORE_SOURCE_DIR),)
-   CORE_SOURCE_DIR = $(ROOT_DIR)/../../../..
+ ifeq ($(CMAKE_SOURCE_DIR),)
+   CMAKE_SOURCE_DIR = $(ROOT_DIR)/../../../..
  endif

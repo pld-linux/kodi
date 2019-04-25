@@ -52,43 +52,41 @@
 %bcond_without	system_ffmpeg	# build with system ffmpeg
 %bcond_with	system_dvdread	# build with system dvdread
 
-%define	codename Krypton
+%define	codename Leia
+#define	subver	rc1
 Summary:	Kodi is a free and open source media-player and entertainment hub
 Name:		kodi
-# 18.x being prepared on dev-18-leia branch
-Version:	17.6
-Release:	5
+Version:	18.2
+Release:	1
 License:	GPL v2+ and GPL v3+
 Group:		Applications/Multimedia
-#Source0:	http://mirrors.kodi.tv/releases/source/%{version}-%{codename}.tar.gz
 Source0:	https://github.com/xbmc/xbmc/archive/%{version}-%{codename}.tar.gz
-# Source0-md5:	a64c2fc56ddc41b9b0dded55eaabf170
+# Source0-md5:	fb6578b680636521181de0db1bda83e4
 Patch0:		jpeglib-boolean.patch
 Patch1:		disable-static.patch
 Patch2:		dvdread.patch
 Patch3:		ffmpeg3.patch
 Patch4:		gcc5.patch
 Patch5:		libdvd.patch
-Patch6:		ffmpeg4.patch
-Patch7:		wrapper.c.patch
-URL:		http://kodi.tv/
+URL:		https://kodi.tv/
 BuildRequires:	Mesa-libEGL-devel
 BuildRequires:	OpenGL-GLU-devel
 BuildRequires:	OpenGL-devel
 BuildRequires:	SDL2-devel
 BuildRequires:	alsa-lib-devel
-BuildRequires:	autoconf >= 2.59
-BuildRequires:	automake
 BuildRequires:	avahi-devel
 BuildRequires:	bluez-libs-devel >= 4.99
 BuildRequires:	bzip2-devel
-BuildRequires:	cmake
+BuildRequires:	cmake >= 3.4
 BuildRequires:	crossguid-devel
 BuildRequires:	curl-devel
 BuildRequires:	dbus-devel
+BuildRequires:	libfmt-devel >= 3.0.1
+BuildRequires:	rapidjson-devel >= 1.1.0
 # libavcodec >= 56.26.100 libavfilter >= 5.11.102 libavformat >= 56.25.101 libavutil >= 54.20.100 libpostproc >= 53.3.100 libswscale >= 3.1.101 libswresample >= 1.1.100
 %{?with_system_ffmpeg:BuildRequires:	ffmpeg-devel >= 2.4.4}
 BuildRequires:	flac-devel
+BuildRequires:	flatbuffers-devel >= 1.9.0
 BuildRequires:	fontconfig-devel
 BuildRequires:	freetype-devel
 BuildRequires:	fribidi-devel
@@ -107,11 +105,12 @@ BuildRequires:	libcap-devel
 BuildRequires:	libcdio-devel
 %{?with_libcec:BuildRequires:	libcec-devel >= 3.0.0}
 BuildRequires:	libdrm-devel
+BuildRequires:	libdvdcss-devel >= 1.4.1
 %{?with_system_dvdread:BuildRequires:	libdvdread-devel}
 BuildRequires:	libgcrypt-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	libltdl-devel
-BuildRequires:	libmicrohttpd-devel
+BuildRequires:	libmicrohttpd-devel >= 0.9.40
 BuildRequires:	libogg-devel
 BuildRequires:	libplist-devel
 BuildRequires:	libpng-devel
@@ -132,6 +131,7 @@ BuildRequires:	mysql-devel
 %ifarch %{ix86}
 BuildRequires:	nasm
 %endif
+BuildRequires:	fstrcmp-devel >= 0.7
 BuildRequires:	openssl-devel
 BuildRequires:	pcre-cxx-devel
 BuildRequires:	pkgconfig
@@ -176,6 +176,11 @@ Requires:	libvorbis
 Obsoletes:	xbmc < 14.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
+# extracting debug info from /home/users/glen/tmp/kodi-18.0-root-glen/usr/lib64/kodi/kodi-x11
+# /usr/lib/rpm/bin/debugedit: canonicalization unexpectedly shrank by one character
+%define		_noautostrip    kodi-x11
+%define		_enable_debug_packages	0
+
 %description
 Kodi Entertainment Center (formerly XBMC) is a free and open-source
 media player software developed by the XBMC Foundation, a non-profit
@@ -186,15 +191,13 @@ and view most videos, music, such as podcasts from the internet, and
 all common digital media files from local and network storage media.
 
 %prep
-%setup -q -n xbmc-%{version}-%{codename}
+%setup -q -n xbmc-%{version}%{?subver}-%{codename}
 #%patch0 -p1
 %patch1 -p1
 %{?with_system_dvdread:%patch2 -p1}
 #%patch3 -p1
 #%patch4 -p1
-%{!?with_system_dvdread:%patch5 -p1}
-%patch6 -p1
-%patch7 -p1
+%patch5 -p1
 
 #%{__rm} -r lib/cximage-6.0/zlib
 #%{__rm} -r lib/libhdhomerun
@@ -210,10 +213,21 @@ all common digital media files from local and network storage media.
 %endif
 
 %build
-#%{__make} -C tools/depends/native/libsquish-native \
-#	CXX="%{__cxx}"
-
-./bootstrap
+install -d build
+cd build
+# cmake not picking up include path from pkgconfig
+# https://trac.kodi.tv/ticket/16861
+%define	specflags -I/usr/include/freetype2
+%cmake \
+	-DENABLE_INTERNAL_LIBDVD=OFF \
+	-DENABLE_INTERNAL_CROSSGUID=OFF \
+	-DENABLE_DVDCSS=%{__true_false dvdcss} \
+	-DENABLE_UPNP=%{__true_false upnp} \
+	-DENABLE_AIRTUNES=%{__true_false airtunes} \
+	-DENABLE_OPTICAL=%{__true_false optical_drive} \
+	-DENABLE_INTERNAL_FFMPEG=%{!?with_system_ffmpeg:ON}%{?with_system_ffmpeg:OFF} \
+	..
+%if 0
 %configure \
 	ac_cv_type__Bool=yes \
 	--disable-silent-rules \
@@ -222,12 +236,10 @@ all common digital media files from local and network storage media.
 	--with-ffmpeg=%{!?with_system_ffmpeg:force}%{?with_system_ffmpeg:shared} \
 	%{__enable_disable afpclient} \
 	%{__enable_disable airplay} \
-	%{__enable_disable airtunes} \
 	%{__enable_disable alsa} \
 	%{__enable_disable asap_codec asap-codec} \
 	%{__enable_disable avahi} \
 	%{__enable_disable dbus} \
-	%{__enable_disable dvdcss} \
 	%{__enable_disable gles} \
 	%{__enable_disable gl} \
 	%{__enable_disable gtest} \
@@ -243,7 +255,6 @@ all common digital media files from local and network storage media.
 	%{__enable_disable nfs} \
 	%{__enable_disable non_free non-free} \
 	%{__enable_disable openmax} \
-	%{__enable_disable optical_drive optical-drive} \
 	%{__enable_disable profiling} \
 	%{__enable_disable pulse} \
 	%{__enable_disable rtmp} \
@@ -262,30 +273,30 @@ all common digital media files from local and network storage media.
 	%{__enable_disable x11} \
 	%{__enable_disable xrandr} \
 	%{nil}
+%endif
 
-%{__make} V=1
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-%{__make} install \
+%{__make} -C build install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-%{__rm} -r $RPM_BUILD_ROOT%{_docdir}/%{name}
+%{__rm} $RPM_BUILD_ROOT%{_docdir}/{version.txt,README.Linux.md,LICENSE.md}
+
+# not packaged
+%{__rm} $RPM_BUILD_ROOT%{_prefix}/lib/firewalld/services/kodi-*.xml
 
 # no -devel package yet
 %{__rm} -r $RPM_BUILD_ROOT%{_includedir}/kodi
-%{__rm} -r $RPM_BUILD_ROOT%{_includedir}/xbmc
-
-# no real use for symlinks to datadir, and make rpm packaging more difficult (symlink vs dir issues)
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/xbmc
-%{__rm} $RPM_BUILD_ROOT%{_datadir}/xbmc
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README.md docs/README.linux
+%doc README.md docs/README.Linux.md
+%attr(755,root,root) %{_bindir}/TexturePacker
 %attr(755,root,root) %{_bindir}/kodi
 %attr(755,root,root) %{_bindir}/kodi-standalone
 %{_datadir}/%{name}
@@ -293,8 +304,3 @@ rm -rf $RPM_BUILD_ROOT
 %{_desktopdir}/kodi.desktop
 %{_iconsdir}/hicolor/*/apps/%{name}.png
 %{_datadir}/xsessions/kodi.desktop
-
-# legacy xbmc compatibility links
-%attr(755,root,root) %{_bindir}/xbmc
-%attr(755,root,root) %{_bindir}/xbmc-standalone
-%{_datadir}/xsessions/xbmc.desktop
