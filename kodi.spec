@@ -56,12 +56,12 @@
 #define	subver	rc1
 Summary:	Kodi is a free and open source media-player and entertainment hub
 Name:		kodi
-Version:	18.2
+Version:	18.4
 Release:	1
 License:	GPL v2+ and GPL v3+
 Group:		Applications/Multimedia
 Source0:	https://github.com/xbmc/xbmc/archive/%{version}-%{codename}.tar.gz
-# Source0-md5:	fb6578b680636521181de0db1bda83e4
+# Source0-md5:	5e5e1e2527c2619785597b04e35fda6c
 Patch0:		jpeglib-boolean.patch
 Patch1:		disable-static.patch
 Patch2:		dvdread.patch
