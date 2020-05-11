@@ -13,7 +13,7 @@
 %bcond_without	avahi		# Avahi support
 %bcond_without	dbus		# DBUS support
 %bcond_without	dvdcss		# DVDCSS support
-%bcond_without	gl		# OpenGL rendering
+%bcond_without	opengl		# OpenGL rendering
 %bcond_with	gtest		# configure Google Test Framework
 %bcond_without	joystick	# SDL joystick support
 %bcond_without	libcap		# libcap support
@@ -241,7 +241,7 @@ cd build
 	%{__enable_disable avahi} \
 	%{__enable_disable dbus} \
 	%{__enable_disable gles} \
-	%{__enable_disable gl} \
+	%{__enable_disable opengl gl} \
 	%{__enable_disable gtest} \
 	%{__enable_disable joystick} \
 	%{__enable_disable libbluray} \
