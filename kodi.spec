@@ -18,7 +18,7 @@
 %bcond_without	joystick	# SDL joystick support
 %bcond_without	libcap		# libcap support
 %bcond_with	libcec		# libcec support
-%bcond_without	libgif		# gif support via libgif
+%bcond_without	gif		# GIF support via giflib
 %bcond_without	libusb		# libusb support
 %bcond_with	mdnsembedded	# mDNSEmbedded support
 %bcond_without	mysql		# MySQL
@@ -93,8 +93,7 @@ BuildRequires:	fribidi-devel
 BuildRequires:	gawk
 BuildRequires:	gettext-autopoint
 BuildRequires:	gettext-tools
-BuildRequires:	giflib-devel
-%{?with_libgif:BuildRequires:	giflib-devel}
+%{?with_gif:BuildRequires:	giflib-devel}
 BuildRequires:	gperf
 BuildRequires:	jre
 BuildRequires:	lcms2-devel
@@ -247,7 +246,7 @@ cd build
 	%{__enable_disable libbluray} \
 	%{__enable_disable libcap} \
 	%{__enable_disable libcec} \
-	%{__enable_disable libgif} \
+	%{__enable_disable gif libgif} \
 	%{__enable_disable libusb} \
 	%{__enable_disable mdnsembedded} \
 	%{__enable_disable mid} \
