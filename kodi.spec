@@ -60,6 +60,7 @@ Version:	18.4
 Release:	5
 License:	GPL v2+ and GPL v3+
 Group:		Applications/Multimedia
+#Source0Download: https://github.com/xbmc/xbmc/releases
 Source0:	https://github.com/xbmc/xbmc/archive/%{version}-%{codename}.tar.gz
 # Source0-md5:	5e5e1e2527c2619785597b04e35fda6c
 Patch0:		jpeglib-boolean.patch
@@ -202,14 +203,7 @@ all common digital media files from local and network storage media.
 %patch6 -p1
 %patch7 -p1
 
-#%{__rm} -r lib/cximage-6.0/zlib
-#%{__rm} -r lib/libhdhomerun
-#%{__rm} -r lib/libmpeg2
-#%{__rm} -r xbmc/cores/dvdplayer/DVDCodecs/Video/libmpeg2
-#%{__rm} -r lib/libbluray
-#%{__rm} -r lib/librtmp
 %{__rm} -r lib/win32
-#%{?with_system_dvdread:%{__rm} -r lib/libdvd/libdvdread}
 
 %if %{without system_ffmpeg}
 #ln -s %{SOURCE1} tools/depends/target/ffmpeg/ffmpeg-2.4.4-%{codename}.tar.gz
@@ -222,13 +216,13 @@ cd build
 # https://trac.kodi.tv/ticket/16861
 %define	specflags -I/usr/include/freetype2
 %cmake \
-	-DENABLE_INTERNAL_LIBDVD=OFF \
-	-DENABLE_INTERNAL_CROSSGUID=OFF \
-	-DENABLE_DVDCSS=%{__true_false dvdcss} \
-	-DENABLE_UPNP=%{__true_false upnp} \
 	-DENABLE_AIRTUNES=%{__true_false airtunes} \
-	-DENABLE_OPTICAL=%{__true_false optical_drive} \
+	-DENABLE_DVDCSS=%{__true_false dvdcss} \
+	-DENABLE_INTERNAL_CROSSGUID=OFF \
 	-DENABLE_INTERNAL_FFMPEG=%{!?with_system_ffmpeg:ON}%{?with_system_ffmpeg:OFF} \
+	-DENABLE_INTERNAL_LIBDVD=OFF \
+	-DENABLE_OPTICAL=%{__true_false optical_drive} \
+	-DENABLE_UPNP=%{__true_false upnp} \
 	..
 %if 0
 %configure \
