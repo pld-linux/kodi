@@ -23,7 +23,7 @@
 %bcond_with	mdnsembedded	# mDNSEmbedded support
 %bcond_without	mysql		# MySQL
 %bcond_without	nfs		# NFS support via libnfs
-%bcond_without	non_free	# componentents with non-compliant licenses
+%bcond_without	nonfree		# componentents with non-compliant licenses
 %bcond_with	openmax		# OpenMax decoding, requires OpenGLES
 %bcond_without	optical_drive	# optical drive
 %bcond_without	projectm	# ProjectM visualisation
@@ -250,7 +250,7 @@ cd build
 	%{__enable_disable mid} \
 	%{__enable_disable mysql} \
 	%{__enable_disable nfs} \
-	%{__enable_disable non_free non-free} \
+	%{__enable_disable nonfree non-free} \
 	%{__enable_disable openmax} \
 	%{__enable_disable profiling} \
 	%{__enable_disable pulse} \
