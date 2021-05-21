@@ -72,7 +72,7 @@ Patch5:		libdvd.patch
 Patch6:		microhttpd.patch
 Patch7:		assert.patch
 URL:		https://kodi.tv/
-BuildRequires:	Mesa-libEGL-devel
+BuildRequires:	EGL-devel
 BuildRequires:	OpenGL-GLU-devel
 BuildRequires:	OpenGL-devel
 BuildRequires:	SDL2-devel
@@ -137,6 +137,9 @@ BuildRequires:	fstrcmp-devel >= 0.7
 BuildRequires:	openssl-devel
 BuildRequires:	pcre-cxx-devel
 BuildRequires:	pkgconfig
+BuildRequires:	pkgconfig(egl)
+BuildRequires:	pkgconfig(gl)
+BuildRequires:	pkgconfig(glu)
 BuildRequires:	pulseaudio-devel >= 1.0
 BuildRequires:	python-devel >= 1:2.6
 BuildRequires:	rpm-pythonprov
