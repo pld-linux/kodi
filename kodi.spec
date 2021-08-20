@@ -71,6 +71,7 @@ Patch4:		gcc5.patch
 Patch5:		libdvd.patch
 Patch6:		microhttpd.patch
 Patch7:		assert.patch
+Patch8:		fmt.patch
 URL:		https://kodi.tv/
 BuildRequires:	EGL-devel
 BuildRequires:	OpenGL-GLU-devel
@@ -205,6 +206,7 @@ all common digital media files from local and network storage media.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
 
 %{__rm} -r lib/win32
 
