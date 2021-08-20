@@ -13,25 +13,22 @@ occur.
  xbmc/windowing/GraphicContext.cpp                  | 2 ++
  2 files changed, 3 insertions(+)
 
-diff --git a/xbmc/profiles/dialogs/GUIDialogProfileSettings.cpp b/xbmc/profiles/dialogs/GUIDialogProfileSettings.cpp
-index 1303d894478c..aa85d95b3234 100644
---- a/xbmc/profiles/dialogs/GUIDialogProfileSettings.cpp
-+++ b/xbmc/profiles/dialogs/GUIDialogProfileSettings.cpp
-@@ -31,6 +31,7 @@
- #include "utils/Variant.h"
- #include "utils/log.h"
+
+--- xbmc-18.4-Leia/xbmc/profiles/dialogs/GUIDialogProfileSettings.cpp~	2019-08-31 11:34:13.000000000 +0000
++++ xbmc-18.4-Leia/xbmc/profiles/dialogs/GUIDialogProfileSettings.cpp	2021-08-20 09:13:44.012432476 +0000
+@@ -8,6 +8,7 @@
+
+ #include "GUIDialogProfileSettings.h"
  
 +#include <cassert>
  #include <utility>
  
- #define SETTING_PROFILE_NAME          "profile.name"
-diff --git a/xbmc/windowing/GraphicContext.cpp b/xbmc/windowing/GraphicContext.cpp
-index b47bafba57dc..75b333ea6daa 100644
---- a/xbmc/windowing/GraphicContext.cpp
-+++ b/xbmc/windowing/GraphicContext.cpp
-@@ -25,6 +25,8 @@
- #include "settings/lib/Setting.h"
- #include "utils/log.h"
+ #include "dialogs/GUIDialogFileBrowser.h"
+--- xbmc-18.4-Leia/xbmc/windowing/GraphicContext.cpp~	2019-08-31 11:34:13.000000000 +0000
++++ xbmc-18.4-Leia/xbmc/windowing/GraphicContext.cpp	2021-08-20 09:16:14.469325393 +0000
+@@ -24,6 +24,8 @@
+ #include "guilib/GUIWindowManager.h"
+ #include "guilib/TextureManager.h"
  
 +#include <cassert>
 +
