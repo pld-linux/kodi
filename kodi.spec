@@ -12,7 +12,11 @@
 %bcond_without	optical_drive	# optical drive
 %bcond_without	upnp		# UPnP support
 %bcond_without	x11		# X11 platform
+%ifarch %{arm} aarch64
+%bcond_without	gles		# OpenGL rendering
+%else
 %bcond_with	gles		# OpenGLES rendering
+%endif
 %bcond_without	wayland		# Wayland platform
 # System libs:
 %bcond_without	system_ffmpeg	# build with system ffmpeg
