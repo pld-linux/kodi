@@ -73,7 +73,7 @@ BuildRequires:	bluez-libs-devel >= 4.99
 BuildRequires:	cmake >= 3.4
 BuildRequires:	crossguid-devel
 BuildRequires:	curl-devel
-BuildRequires:	dav1d-devel
+%{!?with_system_ffmpeg:BuildRequires:	dav1d-devel}
 BuildRequires:	dbus-devel
 # libavcodec >= 58.91.100 libavfilter >= 7.85.100 libavformat >= 58.45.100 libavutil >= 56.51.100 libpostproc >= 55.7.100 libswscale >= 5.7.100 libswresample >= 3.7.100
 %{?with_system_ffmpeg:BuildRequires:	ffmpeg-devel >= 4.3}
