@@ -178,6 +178,9 @@ Requires:	xorg-lib-libxkbcommon >= 0.4.1
 Obsoletes:	xbmc < 14.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
+# debug enabled causes oom on i686/x32
+%define		_enable_debug_packages	0
+
 %description
 Kodi Entertainment Center (formerly XBMC) is a free and open-source
 media player software developed by the XBMC Foundation, a non-profit
