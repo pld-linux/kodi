@@ -17,6 +17,7 @@
 %else
 %bcond_with	gles		# OpenGLES rendering
 %endif
+%bcond_with	gold		# Use gold linker
 %bcond_without	wayland		# Wayland platform
 # System libs:
 %bcond_without	system_ffmpeg	# build with system ffmpeg
@@ -228,7 +229,7 @@ Header files for Kodi.
 	-DENABLE_INTERNAL_RapidJSON:BOOL=OFF \
 	-DENABLE_INTERNAL_SPDLOG:BOOL=OFF \
 	-DENABLE_INTERNAL_UDFREAD:BOOL=OFF \
-	-DENABLE_LDGOLD:BOOL=OFF \
+	%{cmake_on_off gold ENABLE_LDGOLD} \
 	-DENABLE_TESTING:BOOL=OFF \
 	%{cmake_on_off optical_drive ENABLE_OPTICAL} \
 	%{cmake_on_off upnp ENABLE_UPNP} \
