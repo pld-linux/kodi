@@ -149,7 +149,6 @@ BuildRequires:	xorg-lib-libxkbcommon-devel >= 0.4.1
 %endif
 BuildRequires:	zlib-devel
 Requires:	%{name}-common = %{version}-%{release}
-Requires:	/usr/bin/glxinfo
 Requires:	alsa-lib >= 1.0.27
 Requires:	desktop-file-utils
 Requires:	ffmpeg-libs >= 4.3
