@@ -126,6 +126,7 @@ BuildRequires:	pkgconfig
 BuildRequires:	pulseaudio-devel >= 11.0.0
 BuildRequires:	python3-devel >= 1:3.8
 BuildRequires:	rapidjson-devel >= 1.1.0
+BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 2.007
 BuildRequires:	sed >= 4.0
