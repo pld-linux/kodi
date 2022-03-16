@@ -155,7 +155,6 @@ Requires:	%{name}-common = %{version}-%{release}
 Requires:	alsa-lib >= 1.0.27
 Requires:	desktop-file-utils
 Requires:	ffmpeg-libs >= 4.3
-Requires:	flatbuffers >= 1.9.0
 Requires:	hicolor-icon-theme
 Requires:	libbluray >= 0.9.3
 Requires:	libcdio >= 2.1.0
