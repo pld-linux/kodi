@@ -85,6 +85,7 @@ BuildRequires:	fribidi-devel
 BuildRequires:	fstrcmp-devel >= 0.7
 BuildRequires:	gettext-tools
 BuildRequires:	giflib-devel >= 5
+BuildRequires:	jre
 BuildRequires:	lcms2-devel
 BuildRequires:	libass-devel
 BuildRequires:	libatomic-devel
