@@ -55,6 +55,7 @@ Source0:	https://github.com/xbmc/xbmc/archive/%{version}-%{codename}.tar.gz
 # Source0-md5:	a668854505eff3ca5ed9f33e3ac91c80
 Patch0:		disable-static.patch
 Patch1:		libdvd.patch
+Patch2:		libfmt9.patch
 URL:		https://kodi.tv/
 BuildRequires:	EGL-devel
 %{?with_gbm:BuildRequires:	Mesa-libgbm-devel}
@@ -210,6 +211,7 @@ Header files for Kodi.
 %setup -q -n xbmc-%{version}%{?subver}-%{codename}
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %{__rm} -r lib/win32
 
