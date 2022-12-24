@@ -46,16 +46,16 @@
 #define	subver	rc1
 Summary:	Kodi is a free and open source media-player and entertainment hub
 Name:		kodi
-Version:	19.4
-Release:	4
+Version:	19.5
+Release:	1
 License:	GPL v2+ and GPL v3+
 Group:		Applications/Multimedia
 #Source0Download: https://github.com/xbmc/xbmc/releases
 Source0:	https://github.com/xbmc/xbmc/archive/%{version}-%{codename}.tar.gz
-# Source0-md5:	a668854505eff3ca5ed9f33e3ac91c80
+# Source0-md5:	44f78712d1752af1c9c3d43dd5a56a17
 Patch0:		disable-static.patch
 Patch1:		libdvd.patch
-Patch2:		libfmt9.patch
+Patch2:		mesa22.3.patch
 URL:		https://kodi.tv/
 BuildRequires:	EGL-devel
 %{?with_gbm:BuildRequires:	Mesa-libgbm-devel}
