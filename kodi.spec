@@ -47,7 +47,7 @@
 Summary:	Kodi is a free and open source media-player and entertainment hub
 Name:		kodi
 Version:	19.5
-Release:	1
+Release:	2
 License:	GPL v2+ and GPL v3+
 Group:		Applications/Multimedia
 #Source0Download: https://github.com/xbmc/xbmc/releases
@@ -288,7 +288,13 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/%{name}/privacy-policy.txt
 %{_datadir}/%{name}/system
 %{_datadir}/%{name}/userdata
-%attr(755,root,root) %{_libdir}/%{name}
+%attr(755,root,root) %{_libdir}/%{name}/%{name}.bin
+%{?with_x11:%attr(755,root,root) %{_libdir}/%{name}/%{name}-xrandr}
+%dir %{_libdir}/%{name}/addons
+%dir %{_libdir}/%{name}/system
+%dir %{_libdir}/%{name}/system/players
+%dir %{_libdir}/%{name}/system/players/VideoPlayer
+%attr(755,root,root) %{_libdir}/%{name}/system/players/VideoPlayer/libdvdnav-*.so
 %{_desktopdir}/kodi.desktop
 %{_iconsdir}/hicolor/*/apps/%{name}.png
 %{_datadir}/metainfo/org.xbmc.kodi.metainfo.xml
@@ -296,9 +302,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %files common
 %defattr(644,root,root,755)
+%dir %{_libdir}/%{name}
 %dir %{_datadir}/%{name}
 
 %files devel
 %defattr(644,root,root,755)
 %{_includedir}/kodi
+%{_libdir}/%{name}/cmake
 %{_datadir}/%{name}/cmake
