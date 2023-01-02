@@ -47,7 +47,7 @@
 Summary:	Kodi is a free and open source media-player and entertainment hub
 Name:		kodi
 Version:	19.5
-Release:	2
+Release:	3
 License:	GPL v2+ and GPL v3+
 Group:		Applications/Multimedia
 #Source0Download: https://github.com/xbmc/xbmc/releases
@@ -193,7 +193,6 @@ all common digital media files from local and network storage media.
 
 %package common
 Summary:	Common files for Kodi
-BuildArch:	noarch
 
 %description common
 Common files for Kodi.
