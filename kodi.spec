@@ -246,7 +246,9 @@ Header files for Kodi.
 	%{cmake_on_off sse3 ENABLE_SSE3} \
 	%{cmake_on_off ssse3 ENABLE_SSSE3} \
 	%{cmake_on_off sse41 ENABLE_SSE4_1} \
-	%{cmake_on_off sse42 ENABLE_SSE4_2}
+	%{cmake_on_off sse42 ENABLE_SSE4_2} \
+	-DWITH_ARCH=%{_target_base_arch} \
+	-DWITH_CPU=%{_target_cpu}
 
 %{__make} -C build
 
