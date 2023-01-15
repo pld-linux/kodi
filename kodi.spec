@@ -41,6 +41,15 @@
 %ifarch %{x86_with_sse2}
 %define		with_sse2	1
 %endif
+%ifarch %{x8664} x32
+%define		kodi_arch	x86_64-linux
+%endif
+%ifarch %{x86}
+%define		kodi_arch	i486-linux
+%endif
+%ifnarch %{x8664} %{x86} x32
+%define		kodi_arch	%{_target_base_arch}
+%endif
 
 %define	codename Matrix
 #define	subver	rc1
@@ -246,7 +255,7 @@ Header files for Kodi.
 	%{cmake_on_off ssse3 ENABLE_SSSE3} \
 	%{cmake_on_off sse41 ENABLE_SSE4_1} \
 	%{cmake_on_off sse42 ENABLE_SSE4_2} \
-	-DWITH_ARCH=%{_target_base_arch} \
+	-DWITH_ARCH=%{kodi_arch} \
 	-DWITH_CPU=%{_target_cpu}
 
 %{__make} -C build
