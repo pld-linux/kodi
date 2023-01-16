@@ -51,20 +51,28 @@
 %define		kodi_arch	%{_target_base_arch}
 %endif
 
-%define	codename Matrix
+%define		dvdread_ver	6.1.3-Next-Nexus-Alpha2-2
+%define		dvdcss_ver	1.4.3-Next-Nexus-Alpha2-2
+%define		dvdnav_ver	6.1.1-Next-Nexus-Alpha2-2
+
+%define	codename Nexus
 #define	subver	rc1
 Summary:	Kodi is a free and open source media-player and entertainment hub
 Name:		kodi
-Version:	19.5
-Release:	3
+Version:	20.0
+Release:	1
 License:	GPL v2+ and GPL v3+
 Group:		Applications/Multimedia
 #Source0Download: https://github.com/xbmc/xbmc/releases
 Source0:	https://github.com/xbmc/xbmc/archive/%{version}-%{codename}.tar.gz
-# Source0-md5:	44f78712d1752af1c9c3d43dd5a56a17
+# Source0-md5:	2de29eef1e6eedff27487931b91d18bf
+Source1:	https://github.com/xbmc/libdvdread/archive/%{dvdread_ver}/libdvdread-%{dvdread_ver}.tar.gz
+# Source1-md5:	0d24c950abfef9dc02e231dda56912ac
+Source2:	https://github.com/xbmc/libdvdcss/archive/%{dvdcss_ver}/libdvdcss-%{dvdcss_ver}.tar.gz
+# Source2-md5:	42dc3770ae928103e8033a18b007e79d
+Source3:	https://github.com/xbmc/libdvdnav/archive/%{dvdnav_ver}/libdvdnav-%{dvdnav_ver}.tar.gz
+# Source3-md5:	2349cde54d950af21fa4936371ad3349
 Patch0:		disable-static.patch
-Patch1:		libdvd.patch
-Patch2:		mesa22.3.patch
 URL:		https://kodi.tv/
 BuildRequires:	EGL-devel
 %{?with_gbm:BuildRequires:	Mesa-libgbm-devel}
@@ -79,9 +87,11 @@ BuildRequires:	OpenGL-GLX-devel
 %endif
 %{?with_gles:BuildRequires:	OpenGLES-devel}
 BuildRequires:	alsa-lib-devel >= 1.0.27
+BuildRequires:	autoconf
+BuildRequires:	automake
 BuildRequires:	avahi-devel
 BuildRequires:	bluez-libs-devel >= 4.99
-BuildRequires:	cmake >= 3.4
+BuildRequires:	cmake >= 3.12
 BuildRequires:	crossguid-devel
 BuildRequires:	curl-devel
 %{!?with_system_ffmpeg:BuildRequires:	dav1d-devel}
@@ -95,6 +105,7 @@ BuildRequires:	fribidi-devel
 BuildRequires:	fstrcmp-devel >= 0.7
 BuildRequires:	gettext-tools
 BuildRequires:	giflib-devel >= 5
+BuildRequires:	harfbuzz-devel
 BuildRequires:	jre
 BuildRequires:	lcms2-devel
 BuildRequires:	libass-devel
@@ -105,9 +116,6 @@ BuildRequires:	libcdio-c++-devel >= 2.1.0
 BuildRequires:	libcdio-devel >= 2.1.0
 BuildRequires:	libcec-devel >= 3.0.0
 BuildRequires:	libdrm-devel >= 2.4.95
-%{?with_dvdcss:BuildRequires:	libdvdcss-devel >= 1.4.1}
-BuildRequires:	libdvdnav-devel
-BuildRequires:	libdvdread-devel
 BuildRequires:	libfmt-devel >= 6.1.2
 %{?with_gbm:BuildRequires:	libinput-devel}
 BuildRequires:	libjpeg-devel
@@ -117,6 +125,7 @@ BuildRequires:	libplist-devel >= 2.0
 BuildRequires:	libpng-devel
 BuildRequires:	libsmbclient-devel
 BuildRequires:	libstdc++-devel >= 6:5
+BuildRequires:	libtool
 BuildRequires:	libudfread-devel >= 1.0.0
 BuildRequires:	libuuid-devel
 BuildRequires:	libva-devel
@@ -131,8 +140,9 @@ BuildRequires:	libxslt-devel
 BuildRequires:	lirc-devel
 BuildRequires:	lzo-devel >= 2
 BuildRequires:	mysql-devel
-BuildRequires:	openssl-devel >= 1.0.2
+BuildRequires:	openssl-devel >= 1.1.0
 BuildRequires:	pcre-cxx-devel
+BuildRequires:	pipewire-devel
 BuildRequires:	pkgconfig
 BuildRequires:	pulseaudio-devel >= 11.0.0
 BuildRequires:	python3-devel >= 1:3.8
@@ -170,13 +180,12 @@ Requires:	libcdio >= 2.1.0
 Requires:	libcdio-c++ >= 2.1.0
 Requires:	libcec >= 3.0.0
 Requires:	libdrm >= 2.4.95
-%{?with_dvdcss:Requires:	libdvdcss >= 1.4.1}
 Requires:	libfmt >= 6.1.2
 Requires:	libmicrohttpd >= 0.9.40
 Requires:	libplist >= 2.0
 Requires:	libudfread >= 1.0.0
 Requires:	lsb-release
-Requires:	openssl >= 1.0.2
+Requires:	openssl >= 1.1.0
 Requires:	pulseaudio-libs >= 11.0.0
 Requires:	spdlog >= 1.5.0
 Requires:	taglib >= 1.9.0
@@ -215,10 +224,8 @@ Requires:	%{name}-common = %{version}-%{release}
 Header files for Kodi.
 
 %prep
-%setup -q -n xbmc-%{version}%{?subver}-%{codename}
+%setup -q -n xbmc-%{version}%{?subver}-%{codename} -a1 -a2 -a3
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
 
 %{__rm} -r lib/win32
 
@@ -227,7 +234,14 @@ Header files for Kodi.
 %endif
 
 %build
+grep -q '^VERSION=%{dvdread_ver}$' tools/depends/target/libdvdread/LIBDVDREAD-VERSION
+grep -q '^VERSION=%{dvdcss_ver}$' tools/depends/target/libdvdcss/LIBDVDCSS-VERSION
+grep -q '^VERSION=%{dvdnav_ver}$' tools/depends/target/libdvdnav/LIBDVDNAV-VERSION
+
 %cmake -B build \
+	-DLIBDVDREAD_SOURCE_DIR=$(pwd)/libdvdread-%{dvdread_ver} \
+	-DLIBDVDCSS_SOURCE_DIR=$(pwd)/libdvdcss-%{dvdcss_ver} \
+	-DLIBDVDNAV_SOURCE_DIR=$(pwd)/libdvdnav-%{dvdnav_ver} \
 	-DAPP_RENDER_SYSTEM=%{!?with_gles:gl}%{?with_gles:gles} \
 	-DCORE_PLATFORM_NAME="%{?with_gbm:GBM;}%{?with_x11:X11;}%{?with_wayland:WAYLAND;}" \
 	%{cmake_on_off airtunes ENABLE_AIRTUNES} \
@@ -238,11 +252,13 @@ Header files for Kodi.
 	-DENABLE_INTERNAL_FLATBUFFERS:BOOL=OFF \
 	-DENABLE_INTERNAL_FMT:BOOL=OFF \
 	-DENABLE_INTERNAL_FSTRCMP:BOOL=OFF \
-	-DENABLE_INTERNAL_LIBDVD:BOOL=OFF \
+	-DENABLE_INTERNAL_NFS:BOOL=OFF \
+	-DENABLE_INTERNAL_PCRE:BOOL=OFF \
 	-DENABLE_INTERNAL_RapidJSON:BOOL=OFF \
 	-DENABLE_INTERNAL_SPDLOG:BOOL=OFF \
+	-DENABLE_INTERNAL_TAGLIB:BOOL=OFF \
 	-DENABLE_INTERNAL_UDFREAD:BOOL=OFF \
-	%{cmake_on_off gold ENABLE_LDGOLD} \
+	%{cmake_on_off gold ENABLE_GOLD} \
 	-DENABLE_TESTING:BOOL=OFF \
 	%{cmake_on_off optical_drive ENABLE_OPTICAL} \
 	%{cmake_on_off upnp ENABLE_UPNP} \
@@ -288,8 +304,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc README.md docs/README.Linux.md
 %attr(755,root,root) %{_bindir}/JsonSchemaBuilder
-%attr(755,root,root) %{_bindir}/TexturePacker
 %attr(755,root,root) %{_bindir}/kodi
+%attr(755,root,root) %{_bindir}/kodi-TexturePacker
 %attr(755,root,root) %{_bindir}/kodi-standalone
 %{_datadir}/%{name}/addons
 %{_datadir}/%{name}/media
@@ -302,7 +318,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/%{name}/system
 %dir %{_libdir}/%{name}/system/players
 %dir %{_libdir}/%{name}/system/players/VideoPlayer
-%attr(755,root,root) %{_libdir}/%{name}/system/players/VideoPlayer/libdvdnav-*.so
+%attr(755,root,root) %{_libdir}/%{name}/system/players/VideoPlayer/libdvdnav-%{kodi_arch}.so
 %{_desktopdir}/kodi.desktop
 %{_iconsdir}/hicolor/*/apps/%{name}.png
 %{_datadir}/metainfo/org.xbmc.kodi.metainfo.xml
