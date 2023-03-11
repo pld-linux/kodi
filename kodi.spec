@@ -239,6 +239,7 @@ grep -q '^VERSION=%{dvdcss_ver}$' tools/depends/target/libdvdcss/LIBDVDCSS-VERSI
 grep -q '^VERSION=%{dvdnav_ver}$' tools/depends/target/libdvdnav/LIBDVDNAV-VERSION
 
 %cmake -B build \
+	-DHOST_CAN_EXECUTE_TARGET:BOOL=TRUE \
 	-DLIBDVDREAD_SOURCE_DIR=$(pwd)/libdvdread-%{dvdread_ver} \
 	-DLIBDVDCSS_SOURCE_DIR=$(pwd)/libdvdcss-%{dvdcss_ver} \
 	-DLIBDVDNAV_SOURCE_DIR=$(pwd)/libdvdnav-%{dvdnav_ver} \
