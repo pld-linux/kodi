@@ -60,7 +60,7 @@
 Summary:	Kodi is a free and open source media-player and entertainment hub
 Name:		kodi
 Version:	20.1
-Release:	1
+Release:	2
 License:	GPL v2+ and GPL v3+
 Group:		Applications/Multimedia
 #Source0Download: https://github.com/xbmc/xbmc/releases
