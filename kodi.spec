@@ -60,7 +60,7 @@
 Summary:	Kodi is a free and open source media-player and entertainment hub
 Name:		kodi
 Version:	20.2
-Release:	1
+Release:	2
 License:	GPL v2+ and GPL v3+
 Group:		Applications/Multimedia
 #Source0Download: https://github.com/xbmc/xbmc/releases
@@ -73,6 +73,7 @@ Source2:	https://github.com/xbmc/libdvdcss/archive/%{dvdcss_ver}/libdvdcss-%{dvd
 Source3:	https://github.com/xbmc/libdvdnav/archive/%{dvdnav_ver}/libdvdnav-%{dvdnav_ver}.tar.gz
 # Source3-md5:	2349cde54d950af21fa4936371ad3349
 Patch0:		disable-static.patch
+Patch1:		xbmc-libfmt.patch
 URL:		https://kodi.tv/
 BuildRequires:	EGL-devel
 %{?with_gbm:BuildRequires:	Mesa-libgbm-devel}
@@ -226,6 +227,7 @@ Header files for Kodi.
 %prep
 %setup -q -n xbmc-%{version}%{?subver}-%{codename} -a1 -a2 -a3
 %patch0 -p1
+%patch1 -p1
 
 %{__rm} -r lib/win32
 
