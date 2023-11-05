@@ -293,6 +293,9 @@ install -d $RPM_BUILD_ROOT%{_libdir}/%{name}/addons
 # not packaged
 %{__rm} $RPM_BUILD_ROOT%{_prefix}/lib/firewalld/services/kodi-*.xml
 
+# same as kodi-TexturePacker
+%{__rm} $RPM_BUILD_ROOT%{_bindir}/TexturePacker
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -307,7 +310,6 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc README.md docs/README.Linux.md
-%attr(755,root,root) %{_bindir}/JsonSchemaBuilder
 %attr(755,root,root) %{_bindir}/kodi
 %attr(755,root,root) %{_bindir}/kodi-TexturePacker
 %attr(755,root,root) %{_bindir}/kodi-standalone
@@ -327,6 +329,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_iconsdir}/hicolor/*/apps/%{name}.png
 %{_datadir}/metainfo/org.xbmc.kodi.metainfo.xml
 %{_datadir}/xsessions/kodi.desktop
+%{_datadir}/wayland-sessions/kodi-gbm.desktop
 
 %files common
 %defattr(644,root,root,755)
