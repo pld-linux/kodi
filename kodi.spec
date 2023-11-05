@@ -55,17 +55,17 @@
 %define		dvdcss_ver	1.4.3-Next-Nexus-Alpha2-2
 %define		dvdnav_ver	6.1.1-Next-Nexus-Alpha2-2
 
-%define	codename Nexus
-#define	subver	rc1
+%define	codename Omega
+%define	subver	b1
 Summary:	Kodi is a free and open source media-player and entertainment hub
 Name:		kodi
-Version:	20.2
-Release:	2
+Version:	21.0
+Release:	0.%{subver}.1
 License:	GPL v2+ and GPL v3+
 Group:		Applications/Multimedia
 #Source0Download: https://github.com/xbmc/xbmc/releases
-Source0:	https://github.com/xbmc/xbmc/archive/%{version}-%{codename}.tar.gz
-# Source0-md5:	3536687f5cb5b646116bfef3b9c57d63
+Source0:	https://github.com/xbmc/xbmc/archive/%{version}%{subver}-%{codename}.tar.gz
+# Source0-md5:	cdd5ca2a3e81180a87996377f042978c
 Source1:	https://github.com/xbmc/libdvdread/archive/%{dvdread_ver}/libdvdread-%{dvdread_ver}.tar.gz
 # Source1-md5:	0d24c950abfef9dc02e231dda56912ac
 Source2:	https://github.com/xbmc/libdvdcss/archive/%{dvdcss_ver}/libdvdcss-%{dvdcss_ver}.tar.gz
@@ -116,6 +116,7 @@ BuildRequires:	libcap-devel
 BuildRequires:	libcdio-c++-devel >= 2.1.0
 BuildRequires:	libcdio-devel >= 2.1.0
 BuildRequires:	libcec-devel >= 3.0.0
+BuildRequires:	libdisplay-info-devel
 BuildRequires:	libdrm-devel >= 2.4.95
 BuildRequires:	libfmt-devel >= 6.1.2
 %{?with_gbm:BuildRequires:	libinput-devel}
@@ -156,7 +157,7 @@ BuildRequires:	spdlog-devel >= 1.5.0
 BuildRequires:	sqlite3-devel
 BuildRequires:	swig
 BuildRequires:	taglib-devel >= 1.9.0
-BuildRequires:	tinyxml-devel >= 2.6.2
+BuildRequires:	tinyxml2-devel
 BuildRequires:	udev-devel
 %if %{with wayland}
 BuildRequires:	wayland-protocols >= 1.7
@@ -226,8 +227,8 @@ Header files for Kodi.
 
 %prep
 %setup -q -n xbmc-%{version}%{?subver}-%{codename} -a1 -a2 -a3
-%patch0 -p1
-%patch1 -p1
+#%patch0 -p1
+#%patch1 -p1
 
 %{__rm} -r lib/win32
 
