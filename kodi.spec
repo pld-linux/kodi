@@ -59,13 +59,13 @@
 #define	subver	rc1
 Summary:	Kodi is a free and open source media-player and entertainment hub
 Name:		kodi
-Version:	20.4
+Version:	20.5
 Release:	1
 License:	GPL v2+ and GPL v3+
 Group:		Applications/Multimedia
 #Source0Download: https://github.com/xbmc/xbmc/releases
 Source0:	https://github.com/xbmc/xbmc/archive/%{version}-%{codename}.tar.gz
-# Source0-md5:	4680f03ade98ceda0806008f7927863b
+# Source0-md5:	abe2c7791f96e17b4476d268e5b01e3b
 Source1:	https://github.com/xbmc/libdvdread/archive/%{dvdread_ver}/libdvdread-%{dvdread_ver}.tar.gz
 # Source1-md5:	0d24c950abfef9dc02e231dda56912ac
 Source2:	https://github.com/xbmc/libdvdcss/archive/%{dvdcss_ver}/libdvdcss-%{dvdcss_ver}.tar.gz
