@@ -56,16 +56,15 @@
 %define		dvdnav_ver	6.1.1-Next-Nexus-Alpha2-2
 
 %define	codename Omega
-%define	subver	b1
 Summary:	Kodi is a free and open source media-player and entertainment hub
 Name:		kodi
 Version:	21.0
-Release:	0.%{subver}.2
+Release:	1
 License:	GPL v2+ and GPL v3+
 Group:		Applications/Multimedia
 #Source0Download: https://github.com/xbmc/xbmc/releases
-Source0:	https://github.com/xbmc/xbmc/archive/%{version}%{subver}-%{codename}.tar.gz
-# Source0-md5:	cdd5ca2a3e81180a87996377f042978c
+Source0:	https://github.com/xbmc/xbmc/archive/%{version}-%{codename}.tar.gz
+# Source0-md5:	74501a89f0ea23d2908a9b983ab3d6f8
 Source1:	https://github.com/xbmc/libdvdread/archive/%{dvdread_ver}/libdvdread-%{dvdread_ver}.tar.gz
 # Source1-md5:	0d24c950abfef9dc02e231dda56912ac
 Source2:	https://github.com/xbmc/libdvdcss/archive/%{dvdcss_ver}/libdvdcss-%{dvdcss_ver}.tar.gz
@@ -92,13 +91,13 @@ BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	avahi-devel
 BuildRequires:	bluez-libs-devel >= 4.99
-BuildRequires:	cmake >= 3.12
+BuildRequires:	cmake >= 3.15
 BuildRequires:	crossguid-devel
 BuildRequires:	curl-devel
 %{!?with_system_ffmpeg:BuildRequires:	dav1d-devel}
 BuildRequires:	dbus-devel
-# libavcodec >= 58.91.100 libavfilter >= 7.85.100 libavformat >= 58.45.100 libavutil >= 56.51.100 libpostproc >= 55.7.100 libswscale >= 5.7.100 libswresample >= 3.7.100
-%{?with_system_ffmpeg:BuildRequires:	ffmpeg-devel >= 4.3}
+# libavcodec >= 60.2.100 libavfilter >= 9.3.100 libavformat >= 60.3.100 libavutil >= 58.2.100 libpostproc >= 57.1.100 libswscale >= 7.1.100 libswresample >= 4.10.100
+%{?with_system_ffmpeg:BuildRequires:	ffmpeg-devel >= 6.0.0}
 BuildRequires:	flatbuffers-devel >= 1.9.0
 BuildRequires:	fontconfig-devel
 BuildRequires:	freetype-devel
@@ -109,13 +108,13 @@ BuildRequires:	giflib-devel >= 5
 BuildRequires:	harfbuzz-devel
 BuildRequires:	jre
 BuildRequires:	lcms2-devel
-BuildRequires:	libass-devel
+BuildRequires:	libass-devel >= 0.15.0
 BuildRequires:	libatomic-devel
 BuildRequires:	libbluray-devel >= 0.9.3
 BuildRequires:	libcap-devel
 BuildRequires:	libcdio-c++-devel >= 2.1.0
 BuildRequires:	libcdio-devel >= 2.1.0
-BuildRequires:	libcec-devel >= 3.0.0
+BuildRequires:	libcec-devel >= 4.0.0
 BuildRequires:	libdisplay-info-devel
 BuildRequires:	libdrm-devel >= 2.4.95
 BuildRequires:	libfmt-devel >= 6.1.2
@@ -144,7 +143,7 @@ BuildRequires:	lzo-devel >= 2
 BuildRequires:	mysql-devel
 BuildRequires:	openssl-devel >= 1.1.0
 BuildRequires:	pcre-cxx-devel
-BuildRequires:	pipewire-devel
+BuildRequires:	pipewire-devel >= 0.3.50
 BuildRequires:	pkgconfig
 BuildRequires:	pulseaudio-devel >= 11.0.0
 BuildRequires:	python3-devel >= 1:3.8
@@ -157,6 +156,7 @@ BuildRequires:	spdlog-devel >= 1.5.0
 BuildRequires:	sqlite3-devel
 BuildRequires:	swig
 BuildRequires:	taglib-devel >= 1.9.0
+BuildRequires:	tinyxml-devel
 BuildRequires:	tinyxml2-devel
 BuildRequires:	udev-devel
 %if %{with wayland}
@@ -175,12 +175,13 @@ BuildRequires:	zlib-devel
 Requires:	%{name}-common = %{version}-%{release}
 Requires:	alsa-lib >= 1.0.27
 Requires:	desktop-file-utils
-Requires:	ffmpeg-libs >= 4.3
+Requires:	ffmpeg-libs >= 6.0.0
 Requires:	hicolor-icon-theme
+Requires:	libass >= 0.15.0
 Requires:	libbluray >= 0.9.3
 Requires:	libcdio >= 2.1.0
 Requires:	libcdio-c++ >= 2.1.0
-Requires:	libcec >= 3.0.0
+Requires:	libcec >= 4.0.0
 Requires:	libdrm >= 2.4.95
 Requires:	libfmt >= 6.1.2
 Requires:	libmicrohttpd >= 0.9.40
@@ -188,6 +189,7 @@ Requires:	libplist >= 2.0
 Requires:	libudfread >= 1.0.0
 Requires:	lsb-release
 Requires:	openssl >= 1.1.0
+Requires:	pipewire-libs >= 0.3.50
 Requires:	pulseaudio-libs >= 11.0.0
 Requires:	spdlog >= 1.5.0
 Requires:	taglib >= 1.9.0
@@ -226,7 +228,7 @@ Requires:	%{name}-common = %{version}-%{release}
 Header files for Kodi.
 
 %prep
-%setup -q -n xbmc-%{version}%{?subver}-%{codename} -a1 -a2 -a3
+%setup -q -n xbmc-%{version}-%{codename} -a1 -a2 -a3
 #%patch0 -p1
 #%patch1 -p1
 
@@ -250,6 +252,7 @@ grep -q '^VERSION=%{dvdnav_ver}$' tools/depends/target/libdvdnav/LIBDVDNAV-VERSI
 	-DCORE_PLATFORM_NAME="%{?with_gbm:GBM;}%{?with_x11:X11;}%{?with_wayland:WAYLAND;}" \
 	%{cmake_on_off airtunes ENABLE_AIRTUNES} \
 	%{cmake_on_off dvdcss ENABLE_DVDCSS} \
+	-DENABLE_INTERNAL_CEC:BOOL=OFF \
 	-DENABLE_INTERNAL_CROSSGUID:BOOL=OFF \
 	-DENABLE_INTERNAL_DAV1D:BOOL=OFF \
 	-DENABLE_INTERNAL_FFMPEG:BOOL=%{?with_system_ffmpeg:OFF}%{!?with_system_ffmpeg:ON} \
