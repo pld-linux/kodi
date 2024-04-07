@@ -51,9 +51,12 @@
 %define		kodi_arch	%{_target_base_arch}
 %endif
 
-%define		dvdread_ver	6.1.3-Next-Nexus-Alpha2-2
-%define		dvdcss_ver	1.4.3-Next-Nexus-Alpha2-2
-%define		dvdnav_ver	6.1.1-Next-Nexus-Alpha2-2
+%define		dvdread_ver		6.1.3-Next-Nexus-Alpha2-2
+%define		dvdcss_ver		1.4.3-Next-Nexus-Alpha2-2
+%define		dvdnav_ver		6.1.1-Next-Nexus-Alpha2-2
+%define		groovy_ver		4.0.16
+%define		commons_lang_ver	3.14.0
+%define		commons_text_ver	1.11.0
 
 %define	codename Omega
 Summary:	Kodi is a free and open source media-player and entertainment hub
@@ -71,6 +74,12 @@ Source2:	https://github.com/xbmc/libdvdcss/archive/%{dvdcss_ver}/libdvdcss-%{dvd
 # Source2-md5:	42dc3770ae928103e8033a18b007e79d
 Source3:	https://github.com/xbmc/libdvdnav/archive/%{dvdnav_ver}/libdvdnav-%{dvdnav_ver}.tar.gz
 # Source3-md5:	2349cde54d950af21fa4936371ad3349
+Source4:	http://mirrors.kodi.tv/build-deps/sources/apache-groovy-binary-%{groovy_ver}.zip
+# Source4-md5:	bd9eb761a11372dd659da8c2cf1ae692
+Source5:	http://mirrors.kodi.tv/build-deps/sources/commons-lang3-%{commons_lang_ver}-bin.tar.gz
+# Source5-md5:	88c83b3fa007ae35d4f82a2466cad423
+Source6:	http://mirrors.kodi.tv/build-deps/sources/commons-text-%{commons_text_ver}-bin.tar.gz
+# Source6-md5:	ae1f7607159b192e12f9c8eaaaf3d927
 Patch0:		disable-static.patch
 Patch1:		xbmc-libfmt.patch
 URL:		https://kodi.tv/
@@ -238,11 +247,16 @@ Header files for Kodi.
 #ln -s %{SOURCE1} tools/depends/target/ffmpeg/ffmpeg-2.4.4-%{codename}.tar.gz
 %endif
 
-%build
 grep -q '^VERSION=%{dvdread_ver}$' tools/depends/target/libdvdread/LIBDVDREAD-VERSION
 grep -q '^VERSION=%{dvdcss_ver}$' tools/depends/target/libdvdcss/LIBDVDCSS-VERSION
 grep -q '^VERSION=%{dvdnav_ver}$' tools/depends/target/libdvdnav/LIBDVDNAV-VERSION
+grep -q 'GROOVY_VER %{groovy_ver}' xbmc/interfaces/swig/CMakeLists.txt
+grep -q 'APACHE_COMMONS_LANG_VER %{commons_lang_ver}' xbmc/interfaces/swig/CMakeLists.txt
+grep -q 'APACHE_COMMONS_TEXT_VER %{commons_text_ver}' xbmc/interfaces/swig/CMakeLists.txt
+install -d build/build/download
+cp -p %{SOURCE4} %{SOURCE5} %{SOURCE6} build/build/download
 
+%build
 %cmake -B build \
 	-DHOST_CAN_EXECUTE_TARGET:BOOL=TRUE \
 	-DLIBDVDREAD_SOURCE_DIR=$(pwd)/libdvdread-%{dvdread_ver} \
