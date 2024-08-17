@@ -61,13 +61,13 @@
 %define	codename Omega
 Summary:	Kodi is a free and open source media-player and entertainment hub
 Name:		kodi
-Version:	21.0
+Version:	21.1
 Release:	1
 License:	GPL v2+ and GPL v3+
 Group:		Applications/Multimedia
 #Source0Download: https://github.com/xbmc/xbmc/releases
 Source0:	https://github.com/xbmc/xbmc/archive/%{version}-%{codename}.tar.gz
-# Source0-md5:	74501a89f0ea23d2908a9b983ab3d6f8
+# Source0-md5:	c6c6411354639e8fdd30ca06a102cba3
 Source1:	https://github.com/xbmc/libdvdread/archive/%{dvdread_ver}/libdvdread-%{dvdread_ver}.tar.gz
 # Source1-md5:	0d24c950abfef9dc02e231dda56912ac
 Source2:	https://github.com/xbmc/libdvdcss/archive/%{dvdcss_ver}/libdvdcss-%{dvdcss_ver}.tar.gz
@@ -344,6 +344,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/system/players/VideoPlayer/libdvdnav-%{kodi_arch}.so
 %{_desktopdir}/kodi.desktop
 %{_iconsdir}/hicolor/*/apps/%{name}.png
+%{_iconsdir}/hicolor/scalable/apps/kodi.svg
 %{_datadir}/metainfo/org.xbmc.kodi.metainfo.xml
 %{_datadir}/xsessions/kodi.desktop
 %{_datadir}/wayland-sessions/kodi-gbm.desktop
