@@ -80,6 +80,7 @@ Source5:	http://mirrors.kodi.tv/build-deps/sources/commons-lang3-%{commons_lang_
 # Source5-md5:	88c83b3fa007ae35d4f82a2466cad423
 Source6:	http://mirrors.kodi.tv/build-deps/sources/commons-text-%{commons_text_ver}-bin.tar.gz
 # Source6-md5:	ae1f7607159b192e12f9c8eaaaf3d927
+Patch0:		pipewire-1.4.patch
 URL:		https://kodi.tv/
 BuildRequires:	EGL-devel
 %{?with_gbm:BuildRequires:	Mesa-libgbm-devel}
@@ -236,6 +237,7 @@ Header files for Kodi.
 
 %prep
 %setup -q -n xbmc-%{version}-%{codename} -a1 -a2 -a3
+%patch -P0 -p1
 
 %{__rm} -r lib/win32
 
