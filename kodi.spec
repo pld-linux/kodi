@@ -20,17 +20,17 @@
 %bcond_with	gold		# Use gold linker
 %bcond_without	wayland		# Wayland platform
 # System libs:
-%bcond_without	system_ffmpeg	# build with system ffmpeg
+%bcond_without	system_ffmpeg	# system ffmpeg
 # CPU instructions
-%bcond_with	avx		# use AVX instructions
-%bcond_with	avx2		# use AVX2 instructions
-%bcond_with	neon		# use NEON instructions
-%bcond_with	sse		# use SSE instructions
-%bcond_with	sse2		# use SSE2 instructions
-%bcond_with	sse3		# use SSE3 instructions
-%bcond_with	ssse3		# use SSSE3 instructions
-%bcond_with	sse41		# use SSE4.1 instructions
-%bcond_with	sse42		# use SSE4.2 instructions
+%bcond_with	avx		# AVX instructions
+%bcond_with	avx2		# AVX2 instructions
+%bcond_with	neon		# NEON instructions
+%bcond_with	sse		# SSE instructions
+%bcond_with	sse2		# SSE2 instructions
+%bcond_with	sse3		# SSE3 instructions
+%bcond_with	ssse3		# SSSE3 instructions
+%bcond_with	sse41		# SSE4.1 instructions
+%bcond_with	sse42		# SSE4.2 instructions
 
 %ifarch %{arm_with_neon}
 %define		with_neon	1
@@ -59,7 +59,8 @@
 %define		commons_text_ver	1.11.0
 
 %define	codename Omega
-Summary:	Kodi is a free and open source media-player and entertainment hub
+Summary:	Kodi - a free and open source media-player and entertainment hub
+Summary(pl.UTF-8):	Kodi - wolnodostępny, mający otwarte źródła odtwarzacz multimediów i hub rozrywkowy
 Name:		kodi
 Version:	21.2
 Release:	5
@@ -221,19 +222,38 @@ for use with televisions and remote controls. It allows users to play
 and view most videos, music, such as podcasts from the internet, and
 all common digital media files from local and network storage media.
 
+%description -l pl.UTF-8
+Kodi Entertainment Center (Centrum Rozrywkowe Kodi, dawniej XBMC) to
+wolnodostępny programowy odtwarzacz multimedialny, rozwijany przez
+XBMC Foundation - niedochodowe konsorcjum technologiczne. Kodi jest
+dostępne na wiele systemów operacyjnych i platform sprzętowych, z
+programowanym interfejsem użytkownika nadającym się do wykorzystania w
+telewizorach i pilotach. Pozwala użytkownikom odtwarzać i oglądać
+większość filmów, muzyki, podkastów z Internetu oraz wszystkich
+popularnych nośników cyfrowych.
+
 %package common
 Summary:	Common files for Kodi
+Summary(pl.UTF-8):	Wspólne pliki Kodi
+Group:		Applications/Multimedia
 
 %description common
 Common files for Kodi.
 
+%description common -l pl.UTF-8
+Wspólne pliki Kodi.
+
 %package devel
 Summary:	Header files for Kodi
+Summary(pl.UTF-8):	Pliki nagłówkowe Kodi
 Group:		Development/Libraries
 Requires:	%{name}-common = %{version}-%{release}
 
 %description devel
 Header files for Kodi.
+
+%description devel -l pl.UTF-8
+Pliki nagłówkowe Kodi.
 
 %prep
 %setup -q -n xbmc-%{version}-%{codename} -a1 -a2 -a3
