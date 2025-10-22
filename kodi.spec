@@ -63,7 +63,7 @@ Summary:	Kodi - a free and open source media-player and entertainment hub
 Summary(pl.UTF-8):	Kodi - wolnodostępny, mający otwarte źródła odtwarzacz multimediów i hub rozrywkowy
 Name:		kodi
 Version:	21.2
-Release:	8
+Release:	9
 License:	GPL v2+ and GPL v3+
 Group:		Applications/Multimedia
 #Source0Download: https://github.com/xbmc/xbmc/releases
@@ -82,6 +82,8 @@ Source5:	http://mirrors.kodi.tv/build-deps/sources/commons-lang3-%{commons_lang_
 Source6:	http://mirrors.kodi.tv/build-deps/sources/commons-text-%{commons_text_ver}-bin.tar.gz
 # Source6-md5:	ae1f7607159b192e12f9c8eaaaf3d927
 Patch0:		pipewire-1.4.patch
+Patch1:		kodi-21.2-fix-curl-8.16.patch
+Patch2:		kodi-21.2-fix-libnfs-6-compatibility.patch
 URL:		https://kodi.tv/
 BuildRequires:	EGL-devel
 %{?with_gbm:BuildRequires:	Mesa-libgbm-devel}
@@ -258,6 +260,8 @@ Pliki nagłówkowe Kodi.
 %prep
 %setup -q -n xbmc-%{version}-%{codename} -a1 -a2 -a3
 %patch -P0 -p1
+%patch -P1 -p1
+%patch -P2 -p1
 
 %{__rm} -r lib/win32
 
