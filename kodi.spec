@@ -54,21 +54,21 @@
 %define		dvdread_ver		6.1.3-Next-Nexus-Alpha2-2
 %define		dvdcss_ver		1.4.3-Next-Nexus-Alpha2-2
 %define		dvdnav_ver		6.1.1-Next-Nexus-Alpha2-2
-%define		groovy_ver		4.0.16
-%define		commons_lang_ver	3.14.0
-%define		commons_text_ver	1.11.0
+%define		groovy_ver		4.0.26
+%define		commons_lang_ver	3.17.0
+%define		commons_text_ver	1.13.0
 
 %define	codename Omega
 Summary:	Kodi - a free and open source media-player and entertainment hub
 Summary(pl.UTF-8):	Kodi - wolnodostępny, mający otwarte źródła odtwarzacz multimediów i hub rozrywkowy
 Name:		kodi
-Version:	21.2
-Release:	9
+Version:	21.3
+Release:	1
 License:	GPL v2+ and GPL v3+
 Group:		Applications/Multimedia
 #Source0Download: https://github.com/xbmc/xbmc/releases
-Source0:	https://github.com/xbmc/xbmc/archive/v%{version}-%{codename}/%{version}-%{codename}.tar.gz
-# Source0-md5:	ba191fcbd49e19af50e5c56786bc9bf4
+Source0:	https://github.com/xbmc/xbmc/archive/%{version}-%{codename}/%{version}-%{codename}.tar.gz
+# Source0-md5:	bb76936b9fcf395697e2aeeed80cb14e
 Source1:	https://github.com/xbmc/libdvdread/archive/%{dvdread_ver}/libdvdread-%{dvdread_ver}.tar.gz
 # Source1-md5:	0d24c950abfef9dc02e231dda56912ac
 Source2:	https://github.com/xbmc/libdvdcss/archive/%{dvdcss_ver}/libdvdcss-%{dvdcss_ver}.tar.gz
@@ -76,14 +76,11 @@ Source2:	https://github.com/xbmc/libdvdcss/archive/%{dvdcss_ver}/libdvdcss-%{dvd
 Source3:	https://github.com/xbmc/libdvdnav/archive/%{dvdnav_ver}/libdvdnav-%{dvdnav_ver}.tar.gz
 # Source3-md5:	2349cde54d950af21fa4936371ad3349
 Source4:	http://mirrors.kodi.tv/build-deps/sources/apache-groovy-binary-%{groovy_ver}.zip
-# Source4-md5:	bd9eb761a11372dd659da8c2cf1ae692
+# Source4-md5:	eff85b60190bbd1fddf286f3fe2273ac
 Source5:	http://mirrors.kodi.tv/build-deps/sources/commons-lang3-%{commons_lang_ver}-bin.tar.gz
-# Source5-md5:	88c83b3fa007ae35d4f82a2466cad423
+# Source5-md5:	ec63dbb802ed3e188388213f2657966b
 Source6:	http://mirrors.kodi.tv/build-deps/sources/commons-text-%{commons_text_ver}-bin.tar.gz
-# Source6-md5:	ae1f7607159b192e12f9c8eaaaf3d927
-Patch0:		pipewire-1.4.patch
-Patch1:		kodi-21.2-fix-curl-8.16.patch
-Patch2:		kodi-21.2-fix-libnfs-6-compatibility.patch
+# Source6-md5:	941495aeab3bc15ab7ef60db789b51d3
 URL:		https://kodi.tv/
 BuildRequires:	EGL-devel
 %{?with_gbm:BuildRequires:	Mesa-libgbm-devel}
@@ -259,9 +256,6 @@ Pliki nagłówkowe Kodi.
 
 %prep
 %setup -q -n xbmc-%{version}-%{codename} -a1 -a2 -a3
-%patch -P0 -p1
-%patch -P1 -p1
-%patch -P2 -p1
 
 %{__rm} -r lib/win32
 
