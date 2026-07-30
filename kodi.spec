@@ -81,6 +81,7 @@ Source5:	http://mirrors.kodi.tv/build-deps/sources/commons-lang3-%{commons_lang_
 # Source5-md5:	ec63dbb802ed3e188388213f2657966b
 Source6:	http://mirrors.kodi.tv/build-deps/sources/commons-text-%{commons_text_ver}-bin.tar.gz
 # Source6-md5:	941495aeab3bc15ab7ef60db789b51d3
+Patch0:		giflib6.patch
 URL:		https://kodi.tv/
 BuildRequires:	EGL-devel
 %{?with_gbm:BuildRequires:	Mesa-libgbm-devel}
@@ -256,6 +257,7 @@ Pliki nagłówkowe Kodi.
 
 %prep
 %setup -q -n xbmc-%{version}-%{codename} -a1 -a2 -a3
+%patch -P0 -p1
 
 %{__rm} -r lib/win32
 
