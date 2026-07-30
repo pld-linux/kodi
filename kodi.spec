@@ -58,6 +58,8 @@
 %define		commons_lang_ver	3.17.0
 %define		commons_text_ver	1.13.0
 
+%{?use_default_jdk}
+
 %define	codename Omega
 Summary:	Kodi - a free and open source media-player and entertainment hub
 Summary(pl.UTF-8):	Kodi - wolnodostępny, mający otwarte źródła odtwarzacz multimediów i hub rozrywkowy
@@ -115,7 +117,7 @@ BuildRequires:	fstrcmp-devel >= 0.7
 BuildRequires:	gettext-tools
 BuildRequires:	giflib-devel >= 5
 BuildRequires:	harfbuzz-devel
-BuildRequires:	jre
+%buildrequires_jdk
 BuildRequires:	lcms2-devel
 BuildRequires:	libass-devel >= 0.15.0
 BuildRequires:	libatomic-devel
@@ -159,7 +161,7 @@ BuildRequires:	python3-devel >= 1:3.8
 BuildRequires:	rapidjson-devel >= 1.1.0
 BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpm-pythonprov
-BuildRequires:	rpmbuild(macros) >= 2.007
+BuildRequires:	rpmbuild(macros) >= 2.021
 BuildRequires:	sed >= 4.0
 BuildRequires:	spdlog-devel >= 1.5.0
 BuildRequires:	sqlite3-devel
