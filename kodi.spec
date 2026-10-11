@@ -65,7 +65,7 @@ Summary:	Kodi - a free and open source media-player and entertainment hub
 Summary(pl.UTF-8):	Kodi - wolnodostępny, mający otwarte źródła odtwarzacz multimediów i hub rozrywkowy
 Name:		kodi
 Version:	21.3
-Release:	3
+Release:	4
 License:	GPL v2+ and GPL v3+
 Group:		Applications/Multimedia
 #Source0Download: https://github.com/xbmc/xbmc/releases
