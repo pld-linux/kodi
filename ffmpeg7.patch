@@ -1,0 +1,220 @@
+From 3ad030d9b7aa326edb67cff2d7bd1caa1db78108 Mon Sep 17 00:00:00 2001
+From: Bernd Kuhls <bernd@kuhls.net>
+Date: Sun, 11 Oct 2026 13:35:47 +0200
+Subject: [PATCH 1/3] VAAPI: fix build with ffmpeg 7.0.3
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+The minimum ffmpeg version supported by Kodi Piers is 7.0:
+https://github.com/xbmc/xbmc/blob/22.0rc1-Piers/cmake/modules/FindFFMPEG.cmake#L307
+
+Building with ffmpeg 7.0.3 fails:
+
+../../../../../../xbmc/cores/VideoPlayer/DVDCodecs/Video/VAAPI.cpp:
+ In member function 'virtual bool VAAPI::CDecoder::Open(AVCodecContext*,
+ AVCodecContext*, AVPixelFormat)':
+
+../../../../../../xbmc/cores/VideoPlayer/DVDCodecs/Video/VAAPI.cpp:659:81:
+ error: 'AV_PIX_FMT_Y216' was not declared in this scope;
+ did you mean 'AV_PIX_FMT_Y210'?
+
+../../../../../../xbmc/cores/VideoPlayer/DVDCodecs/Video/VAAPI.cpp:670:81:
+ error: 'AV_PIX_FMT_XV48' was not declared in this scope;
+ did you mean 'AV_PIX_FMT_NV42'?
+
+../../../../../../xbmc/cores/VideoPlayer/DVDCodecs/Video/VAAPI.cpp:698:73:
+ error: 'AV_PIX_FMT_XV48' was not declared in this scope;
+ did you mean 'AV_PIX_FMT_NV42'?
+
+xbmc/cores/VideoPlayer/DVDCodecs/Video/VAAPI.h:470:46:
+ error: ‘AV_PIX_FMT_Y216’ was not declared in this scope;
+ did you mean ‘AV_PIX_FMT_Y210’?
+
+because the broken code was added in ffmpeg 8.0:
+
+https://code.ffmpeg.org/FFmpeg/FFmpeg/src/tag/n8.0.3/doc/APIchanges#L159
+2024-10-26 - e02a3b40a5e - lavu 59.46.100 - pixfmt.h
+  Add AV_PIX_FMT_XV48.
+
+https://code.ffmpeg.org/FFmpeg/FFmpeg/src/tag/n8.0.3/doc/APIchanges#L176
+2024-10-23 - f462ba05f54 - lavu 59.45.100 - pixfmt.h
+  Add AV_PIX_FMT_Y216.
+
+Signed-off-by: Bernd Kuhls <bernd@kuhls.net>
+---
+ xbmc/cores/VideoPlayer/DVDCodecs/Video/VAAPI.cpp | 12 ++++++++++++
+ xbmc/cores/VideoPlayer/DVDCodecs/Video/VAAPI.h   |  4 ++++
+ 2 files changed, 16 insertions(+)
+
+diff --git a/xbmc/cores/VideoPlayer/DVDCodecs/Video/VAAPI.cpp b/xbmc/cores/VideoPlayer/DVDCodecs/Video/VAAPI.cpp
+index 121fc3625fb20..a177cd1659be6 100644
+--- a/xbmc/cores/VideoPlayer/DVDCodecs/Video/VAAPI.cpp
++++ b/xbmc/cores/VideoPlayer/DVDCodecs/Video/VAAPI.cpp
+@@ -656,7 +656,11 @@ bool CDecoder::Open(AVCodecContext* avctx, AVCodecContext* mainctx, const enum A
+         profile = VAProfileHEVCMain422_10;
+       else if (avctx->profile == AV_PROFILE_HEVC_REXT && m_vaapiConfig.bitDepth == 12 &&
+                chroma == 422 &&
++#if LIBAVUTIL_VERSION_INT >= AV_VERSION_INT(59, 45, 100)
+                (m_capFormats.Supports(AV_PIX_FMT_Y212) || m_capFormats.Supports(AV_PIX_FMT_Y216)))
++#else
++               m_capFormats.Supports(AV_PIX_FMT_Y212))
++#endif
+         profile = VAProfileHEVCMain422_12;
+       else if (avctx->profile == AV_PROFILE_HEVC_REXT && m_vaapiConfig.bitDepth == 8 &&
+                chroma == 444 &&
+@@ -667,7 +671,11 @@ bool CDecoder::Open(AVCodecContext* avctx, AVCodecContext* mainctx, const enum A
+         profile = VAProfileHEVCMain444_10;
+       else if (avctx->profile == AV_PROFILE_HEVC_REXT && m_vaapiConfig.bitDepth == 12 &&
+                chroma == 444 &&
++#if LIBAVUTIL_VERSION_INT >= AV_VERSION_INT(59, 46, 100)
+                (m_capFormats.Supports(AV_PIX_FMT_XV36) || m_capFormats.Supports(AV_PIX_FMT_XV48)))
++#else
++               m_capFormats.Supports(AV_PIX_FMT_XV36))
++#endif
+         profile = VAProfileHEVCMain444_12;
+       break;
+     }
+@@ -694,8 +702,12 @@ bool CDecoder::Open(AVCodecContext* avctx, AVCodecContext* mainctx, const enum A
+         profile = VAProfileVP9Profile1;
+       else if (avctx->profile == AV_PROFILE_VP9_3 && chroma == 444 &&
+                ((m_vaapiConfig.bitDepth == 10 && m_capFormats.Supports(AV_PIX_FMT_XV30)) ||
++#if LIBAVUTIL_VERSION_INT >= AV_VERSION_INT(59, 46, 100)
+                 (m_vaapiConfig.bitDepth == 12 && (m_capFormats.Supports(AV_PIX_FMT_XV36) ||
+                                                   m_capFormats.Supports(AV_PIX_FMT_XV48)))))
++#else
++                (m_vaapiConfig.bitDepth == 12 && (m_capFormats.Supports(AV_PIX_FMT_XV36)))))
++#endif
+         profile = VAProfileVP9Profile3;
+       break;
+     }
+diff --git a/xbmc/cores/VideoPlayer/DVDCodecs/Video/VAAPI.h b/xbmc/cores/VideoPlayer/DVDCodecs/Video/VAAPI.h
+index daf553e33b3ca..93cd546283263 100644
+--- a/xbmc/cores/VideoPlayer/DVDCodecs/Video/VAAPI.h
++++ b/xbmc/cores/VideoPlayer/DVDCodecs/Video/VAAPI.h
+@@ -467,13 +467,17 @@ inline constexpr VaFormatEntry kVaFormatTable[] = {
+     {VA_FOURCC_P016, VA_RT_FORMAT_YUV420_12, AV_PIX_FMT_P016},
+     {VA_FOURCC_Y210, VA_RT_FORMAT_YUV422_10, AV_PIX_FMT_Y210},
+     {VA_FOURCC_Y212, VA_RT_FORMAT_YUV422_12, AV_PIX_FMT_Y212},
++#if LIBAVUTIL_VERSION_INT >= AV_VERSION_INT(59, 45, 100)
+     {VA_FOURCC_Y216, VA_RT_FORMAT_YUV422_12, AV_PIX_FMT_Y216},
++#endif
+     {VA_FOURCC_AYUV, VA_RT_FORMAT_YUV444, AV_PIX_FMT_VUYA},
+     {VA_FOURCC_XYUV, VA_RT_FORMAT_YUV444, AV_PIX_FMT_VUYX},
+     {VA_FOURCC_Y410, VA_RT_FORMAT_YUV444_10, AV_PIX_FMT_XV30},
+     {VA_FOURCC_Y412, VA_RT_FORMAT_YUV444_12, AV_PIX_FMT_XV36},
++#if LIBAVUTIL_VERSION_INT >= AV_VERSION_INT(59, 46, 100)
+     {VA_FOURCC_Y416, VA_RT_FORMAT_YUV444_12, AV_PIX_FMT_XV48},
+ #endif
++#endif
+ };
+ 
+ /*!
+
+From 6acfac6ffba80898db9d022ecaf69c905881e1e9 Mon Sep 17 00:00:00 2001
+From: Bernd Kuhls <bernd@kuhls.net>
+Date: Sun, 11 Oct 2026 14:04:52 +0200
+Subject: [PATCH 2/3] AEEncoderFFmpeg: fix build with ffmpeg 7.0.3
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+The minimum ffmpeg version supported by Kodi Piers is 7.0:
+https://github.com/xbmc/xbmc/blob/22.0rc1-Piers/cmake/modules/FindFFMPEG.cmake#L307
+
+Building with ffmpeg 7.0.3 fails:
+
+xbmc/cores/AudioEngine/Encoders/AEEncoderFFmpeg.cpp:130:53:
+ error: ‘AV_CODEC_CONFIG_CHANNEL_LAYOUT’ was not declared in this scope;
+ did you mean ‘AV_CODEC_CAP_CHANNEL_CONF’?
+
+xbmc/cores/AudioEngine/Encoders/AEEncoderFFmpeg.cpp:130:5:
+ error: ‘avcodec_get_supported_config’ was not declared in this scope;
+ did you mean ‘avcodec_get_hw_config’?
+
+because the broken code was added in ffmpeg 7.1:
+
+https://code.ffmpeg.org/FFmpeg/FFmpeg/src/tag/n7.1.5/doc/APIchanges#L28
+
+2024-09-08 - 3305767560a - lavc 61.13.100 - avcodec.h
+  Add avcodec_get_supported_config() and enum AVCodecConfig; deprecate
+  AVCodec.pix_fmts, AVCodec.sample_fmts, AVCodec.supported_framerates,
+  AVCodec.supported_samplerates and AVCodec.ch_layouts.
+
+Signed-off-by: Bernd Kuhls <bernd@kuhls.net>
+---
+ xbmc/cores/AudioEngine/Encoders/AEEncoderFFmpeg.cpp | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/xbmc/cores/AudioEngine/Encoders/AEEncoderFFmpeg.cpp b/xbmc/cores/AudioEngine/Encoders/AEEncoderFFmpeg.cpp
+index 6a7013bc5f58d..61ba83d6aac18 100644
+--- a/xbmc/cores/AudioEngine/Encoders/AEEncoderFFmpeg.cpp
++++ b/xbmc/cores/AudioEngine/Encoders/AEEncoderFFmpeg.cpp
+@@ -122,6 +122,7 @@ bool CAEEncoderFFmpeg::Initialize(AEAudioFormat& format, bool allow_planar_input
+   m_CodecCtx->bit_rate = m_BitRate;
+   m_CodecCtx->sample_rate = format.m_sampleRate;
+ 
++#if LIBAVCODEC_VERSION_INT >= AV_VERSION_INT(61, 13, 100)
+   uint64_t channelLayout = AV_CH_LAYOUT_5POINT1_BACK;
+   if (format.m_channelLayout.IsLayoutValid())
+   {
+@@ -141,9 +142,14 @@ bool CAEEncoderFFmpeg::Initialize(AEAudioFormat& format, bool allow_planar_input
+     format.m_channelLayout = layouts[best];
+     channelLayout = CAEUtil::GetAVChannelLayout(format.m_channelLayout);
+   }
++#endif
+ 
+   av_channel_layout_uninit(&m_CodecCtx->ch_layout);
++#if LIBAVCODEC_VERSION_INT >= AV_VERSION_INT(61, 13, 100)
+   av_channel_layout_from_mask(&m_CodecCtx->ch_layout, channelLayout);
++#else
++  av_channel_layout_from_mask(&m_CodecCtx->ch_layout, AV_CH_LAYOUT_5POINT1_BACK);
++#endif
+ 
+   const AVSampleFormat* sampleFmts = nullptr;
+   int numFmts = 0;
+
+From 3c3169171165607a7637c7c5dbd876a637e2109a Mon Sep 17 00:00:00 2001
+From: Bernd Kuhls <bernd@kuhls.net>
+Date: Sun, 11 Oct 2026 14:14:32 +0200
+Subject: [PATCH 3/3] InputStreamAddon: fix build with ffmpeg 7.0.3
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+The minimum ffmpeg version supported by Kodi Piers is 7.0:
+https://github.com/xbmc/xbmc/blob/22.0rc1-Piers/cmake/modules/FindFFMPEG.cmake#L307
+
+Building with ffmpeg 7.0.3 fails:
+
+xbmc/cores/VideoPlayer/DVDInputStreams/InputStreamAddon.cpp:514:25:
+ error: ‘AVDOVIDecoderConfigurationRecord’ {aka ‘struct
+ AVDOVIDecoderConfigurationRecord’} has no member named
+ ‘dv_md_compression’
+
+because the broken code was added in ffmpeg 7.1:
+
+https://code.ffmpeg.org/FFmpeg/FFmpeg/src/tag/n7.1.5/doc/APIchanges#L64
+
+2024-07-28 - cbea92c84d4 - lavu 59.30.100 - dovi_meta.h
+  Add AVDOVIDecoderConfigurationRecord.dv_md_compression.
+
+Signed-off-by: Bernd Kuhls <bernd@kuhls.net>
+---
+ xbmc/cores/VideoPlayer/DVDInputStreams/InputStreamAddon.cpp | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/xbmc/cores/VideoPlayer/DVDInputStreams/InputStreamAddon.cpp b/xbmc/cores/VideoPlayer/DVDInputStreams/InputStreamAddon.cpp
+index 7a98d9f84c6d1..9ee4232f51ceb 100644
+--- a/xbmc/cores/VideoPlayer/DVDInputStreams/InputStreamAddon.cpp
++++ b/xbmc/cores/VideoPlayer/DVDInputStreams/InputStreamAddon.cpp
+@@ -511,7 +511,9 @@ KODI_HANDLE CInputStreamAddon::cb_get_stream_transfer(KODI_HANDLE handle,
+       videoStream->dovi.bl_present_flag = stream->m_dvccMetadata->m_blPresentFlag;
+       videoStream->dovi.dv_bl_signal_compatibility_id =
+           stream->m_dvccMetadata->m_dvBlSignalCompatibilityId;
++#if LIBAVUTIL_VERSION_INT >= AV_VERSION_INT(59, 30, 100)
+       videoStream->dovi.dv_md_compression = stream->m_dvccMetadata->m_dvMdCompression;
++#endif
+     }
+     //@}
+ 

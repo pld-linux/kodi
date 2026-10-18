@@ -51,39 +51,32 @@
 %define		kodi_arch	%{_target_base_arch}
 %endif
 
-%define		dvdread_ver		6.1.3-Next-Nexus-Alpha2-2
-%define		dvdcss_ver		1.4.3-Next-Nexus-Alpha2-2
-%define		dvdnav_ver		6.1.1-Next-Nexus-Alpha2-2
-%define		groovy_ver		4.0.26
-%define		commons_lang_ver	3.17.0
-%define		commons_text_ver	1.13.0
+%define		dvdread_ver		7.0.1
+%define		dvdcss_ver		1.5.0
+%define		dvdnav_ver		7.0.0
 
 %{?use_default_jdk}
 
-%define	codename Omega
+%define		_rc	rc1
+
+%define		codename	Piers
 Summary:	Kodi - a free and open source media-player and entertainment hub
 Summary(pl.UTF-8):	Kodi - wolnodostępny, mający otwarte źródła odtwarzacz multimediów i hub rozrywkowy
 Name:		kodi
-Version:	21.3
-Release:	5
+Version:	22.0
+Release:	0.%{_rc}.1
 License:	GPL v2+ and GPL v3+
 Group:		Applications/Multimedia
 #Source0Download: https://github.com/xbmc/xbmc/releases
-Source0:	https://github.com/xbmc/xbmc/archive/%{version}-%{codename}/%{version}-%{codename}.tar.gz
-# Source0-md5:	bb76936b9fcf395697e2aeeed80cb14e
-Source1:	https://github.com/xbmc/libdvdread/archive/%{dvdread_ver}/libdvdread-%{dvdread_ver}.tar.gz
-# Source1-md5:	0d24c950abfef9dc02e231dda56912ac
-Source2:	https://github.com/xbmc/libdvdcss/archive/%{dvdcss_ver}/libdvdcss-%{dvdcss_ver}.tar.gz
-# Source2-md5:	42dc3770ae928103e8033a18b007e79d
-Source3:	https://github.com/xbmc/libdvdnav/archive/%{dvdnav_ver}/libdvdnav-%{dvdnav_ver}.tar.gz
-# Source3-md5:	2349cde54d950af21fa4936371ad3349
-Source4:	http://mirrors.kodi.tv/build-deps/sources/apache-groovy-binary-%{groovy_ver}.zip
-# Source4-md5:	eff85b60190bbd1fddf286f3fe2273ac
-Source5:	http://mirrors.kodi.tv/build-deps/sources/commons-lang3-%{commons_lang_ver}-bin.tar.gz
-# Source5-md5:	ec63dbb802ed3e188388213f2657966b
-Source6:	http://mirrors.kodi.tv/build-deps/sources/commons-text-%{commons_text_ver}-bin.tar.gz
-# Source6-md5:	941495aeab3bc15ab7ef60db789b51d3
-Patch0:		giflib6.patch
+Source0:	https://github.com/xbmc/xbmc/archive/%{version}%{_rc}-%{codename}/%{version}%{_rc}-%{codename}.tar.gz
+# Source0-md5:	bf004b52aca3ad160249e02717977c40
+Source1:	https://mirrors.kodi.tv/build-deps/sources/libdvdread-%{dvdread_ver}.tar.bz2
+# Source1-md5:	120e9ead9f59e2031d05e6a61ffea8ec
+Source2:	https://mirrors.kodi.tv/build-deps/sources/libdvdcss-%{dvdcss_ver}.tar.bz2
+# Source2-md5:	5ff8b0240506b96d04f1a0cf04ab77d1
+Source3:	https://mirrors.kodi.tv/build-deps/sources/libdvdnav-%{dvdnav_ver}.tar.bz2
+# Source3-md5:	a0f4805cd9bb44fd635378b5c0447623
+Patch0:		ffmpeg7.patch
 URL:		https://kodi.tv/
 BuildRequires:	EGL-devel
 %{?with_gbm:BuildRequires:	Mesa-libgbm-devel}
@@ -102,13 +95,14 @@ BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	avahi-devel
 BuildRequires:	bluez-libs-devel >= 4.99
-BuildRequires:	cmake >= 3.15
-BuildRequires:	crossguid-devel
+BuildRequires:	cmake >= 3.20
+BuildRequires:	crossguid-devel >= 0.2.3
 BuildRequires:	curl-devel
 %{!?with_system_ffmpeg:BuildRequires:	dav1d-devel}
 BuildRequires:	dbus-devel
-# libavcodec >= 60.2.100 libavfilter >= 9.3.100 libavformat >= 60.3.100 libavutil >= 58.2.100 libpostproc >= 57.1.100 libswscale >= 7.1.100 libswresample >= 4.10.100
-%{?with_system_ffmpeg:BuildRequires:	ffmpeg-devel >= 6.0.0}
+BuildRequires:	exiv2-devel
+# libavcodec >= 61.3.100 libavfilter >= 10.1.100 libavformat >= 61.1.100 libavutil >= 59.8.100 libpostproc >= 58.1.100 libswscale >= 8.1.100 libswresample >= 5.1.100
+%{?with_system_ffmpeg:BuildRequires:	ffmpeg-devel >= 7.0.0}
 BuildRequires:	flatbuffers-devel >= 1.9.0
 BuildRequires:	fontconfig-devel
 BuildRequires:	freetype-devel
@@ -118,25 +112,25 @@ BuildRequires:	gettext-tools
 BuildRequires:	giflib-devel >= 5
 BuildRequires:	harfbuzz-devel
 %buildrequires_jdk
-BuildRequires:	lcms2-devel
+BuildRequires:	lcms2-devel >= 2.10
 BuildRequires:	libass-devel >= 0.15.0
 BuildRequires:	libatomic-devel
 BuildRequires:	libbluray-devel >= 0.9.3
 BuildRequires:	libcap-devel
 BuildRequires:	libcdio-c++-devel >= 2.1.0
 BuildRequires:	libcdio-devel >= 2.1.0
-BuildRequires:	libcec-devel >= 4.0.0
+BuildRequires:	libcec-devel >= 7.0.0
 BuildRequires:	libdisplay-info-devel
 BuildRequires:	libdrm-devel >= 2.4.95
 BuildRequires:	libfmt-devel >= 6.1.2
 %{?with_gbm:BuildRequires:	libinput-devel}
 BuildRequires:	libjpeg-devel
 BuildRequires:	libmicrohttpd-devel >= 0.9.40
-BuildRequires:	libnfs-devel
+BuildRequires:	libnfs-devel >= 3.0.0
 BuildRequires:	libplist-devel >= 2.0
 BuildRequires:	libpng-devel
 BuildRequires:	libsmbclient-devel
-BuildRequires:	libstdc++-devel >= 6:5
+BuildRequires:	libstdc++-devel >= 6:8
 BuildRequires:	libtool
 BuildRequires:	libudfread-devel >= 1.0.0
 BuildRequires:	libuuid-devel
@@ -151,21 +145,24 @@ BuildRequires:	libxml2-devel >= 2.0
 BuildRequires:	libxslt-devel
 BuildRequires:	lirc-devel
 BuildRequires:	lzo-devel >= 2
+BuildRequires:	meson
+BuildRequires:	ninja
 BuildRequires:	mysql-devel
+BuildRequires:	nlohmann-json-devel >= 3.2.0
 BuildRequires:	openssl-devel >= 1.1.0
-BuildRequires:	pcre-cxx-devel
+BuildRequires:	pcre2-8-devel
 BuildRequires:	pipewire-devel >= 0.3.50
 BuildRequires:	pkgconfig
 BuildRequires:	pulseaudio-devel >= 11.0.0
 BuildRequires:	python3-devel >= 1:3.8
-BuildRequires:	rapidjson-devel >= 1.1.0
 BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 2.021
 BuildRequires:	sed >= 4.0
 BuildRequires:	spdlog-devel >= 1.5.0
 BuildRequires:	sqlite3-devel
-BuildRequires:	swig
+BuildRequires:	swig >= 4.5.0
+BuildRequires:	swig-python >= 4.5.0
 BuildRequires:	taglib-devel >= 1.9.0
 BuildRequires:	tinyxml-devel
 BuildRequires:	tinyxml2-devel
@@ -185,17 +182,20 @@ BuildRequires:	xorg-lib-libxkbcommon-devel >= 0.4.1
 BuildRequires:	zlib-devel
 Requires:	%{name}-common = %{version}-%{release}
 Requires:	alsa-lib >= 1.0.27
+Requires:	crossguid >= 0.2.3
 Requires:	desktop-file-utils
-Requires:	ffmpeg-libs >= 6.0.0
+Requires:	ffmpeg-libs >= 7.0.0
 Requires:	hicolor-icon-theme
+Requires:	lcms2 >= 2.10
 Requires:	libass >= 0.15.0
 Requires:	libbluray >= 0.9.3
 Requires:	libcdio >= 2.1.0
 Requires:	libcdio-c++ >= 2.1.0
-Requires:	libcec >= 4.0.0
+Requires:	libcec >= 7.0.0
 Requires:	libdrm >= 2.4.95
 Requires:	libfmt >= 6.1.2
 Requires:	libmicrohttpd >= 0.9.40
+Requires:	libnfs >= 3.0.0
 Requires:	libplist >= 2.0
 Requires:	libudfread >= 1.0.0
 Requires:	lsb-release
@@ -258,10 +258,8 @@ Header files for Kodi.
 Pliki nagłówkowe Kodi.
 
 %prep
-%setup -q -n xbmc-%{version}-%{codename} -a1 -a2 -a3
+%setup -q -n xbmc-%{version}%{_rc}-%{codename}
 %patch -P0 -p1
-
-%{__rm} -r lib/win32
 
 %if %{without system_ffmpeg}
 #ln -s %{SOURCE1} tools/depends/target/ffmpeg/ffmpeg-2.4.4-%{codename}.tar.gz
@@ -270,35 +268,38 @@ Pliki nagłówkowe Kodi.
 grep -q '^VERSION=%{dvdread_ver}$' tools/depends/target/libdvdread/LIBDVDREAD-VERSION
 grep -q '^VERSION=%{dvdcss_ver}$' tools/depends/target/libdvdcss/LIBDVDCSS-VERSION
 grep -q '^VERSION=%{dvdnav_ver}$' tools/depends/target/libdvdnav/LIBDVDNAV-VERSION
-grep -q 'GROOVY_VER %{groovy_ver}' xbmc/interfaces/swig/CMakeLists.txt
-grep -q 'APACHE_COMMONS_LANG_VER %{commons_lang_ver}' xbmc/interfaces/swig/CMakeLists.txt
-grep -q 'APACHE_COMMONS_TEXT_VER %{commons_text_ver}' xbmc/interfaces/swig/CMakeLists.txt
 install -d build/build/download
-cp -p %{SOURCE4} %{SOURCE5} %{SOURCE6} build/build/download
+cp -p %{SOURCE1} %{SOURCE2} %{SOURCE3} build/build/download
 
 %build
 %cmake -B build \
 	-DHOST_CAN_EXECUTE_TARGET:BOOL=TRUE \
-	-DLIBDVDREAD_SOURCE_DIR=$(pwd)/libdvdread-%{dvdread_ver} \
-	-DLIBDVDCSS_SOURCE_DIR=$(pwd)/libdvdcss-%{dvdcss_ver} \
-	-DLIBDVDNAV_SOURCE_DIR=$(pwd)/libdvdnav-%{dvdnav_ver} \
 	-DAPP_RENDER_SYSTEM=%{!?with_gles:gl}%{?with_gles:gles} \
 	-DCORE_PLATFORM_NAME="%{?with_gbm:GBM;}%{?with_x11:X11;}%{?with_wayland:WAYLAND;}" \
 	%{cmake_on_off airtunes ENABLE_AIRTUNES} \
 	%{cmake_on_off dvdcss ENABLE_DVDCSS} \
+	-DENABLE_INTERNAL_ASS:BOOL=OFF \
+	-DENABLE_INTERNAL_BLURAY:BOOL=OFF \
 	-DENABLE_INTERNAL_CEC:BOOL=OFF \
 	-DENABLE_INTERNAL_CROSSGUID:BOOL=OFF \
+	-DENABLE_INTERNAL_CURL:BOOL=OFF \
 	-DENABLE_INTERNAL_DAV1D:BOOL=OFF \
+	-DENABLE_INTERNAL_EXIV2:BOOL=OFF \
 	-DENABLE_INTERNAL_FFMPEG:BOOL=%{?with_system_ffmpeg:OFF}%{!?with_system_ffmpeg:ON} \
 	-DENABLE_INTERNAL_FLATBUFFERS:BOOL=OFF \
 	-DENABLE_INTERNAL_FMT:BOOL=OFF \
 	-DENABLE_INTERNAL_FSTRCMP:BOOL=OFF \
+	-DENABLE_INTERNAL_LCMS2:BOOL=OFF \
+	-DENABLE_INTERNAL_LIBMICROHTTPD:BOOL=OFF \
+	-DENABLE_INTERNAL_MARIADBCLIENT:BOOL=OFF \
 	-DENABLE_INTERNAL_NFS:BOOL=OFF \
-	-DENABLE_INTERNAL_PCRE:BOOL=OFF \
-	-DENABLE_INTERNAL_RapidJSON:BOOL=OFF \
+	-DENABLE_INTERNAL_NLOHMANNJSON:BOOL=OFF \
+	-DENABLE_INTERNAL_PCRE2:BOOL=OFF \
 	-DENABLE_INTERNAL_SPDLOG:BOOL=OFF \
+	-DENABLE_INTERNAL_SWIG:BOOL=OFF \
 	-DENABLE_INTERNAL_TAGLIB:BOOL=OFF \
 	-DENABLE_INTERNAL_UDFREAD:BOOL=OFF \
+	-DENABLE_INTERNAL_XSLT:BOOL=OFF \
 	%{cmake_on_off gold ENABLE_GOLD} \
 	-DENABLE_TESTING:BOOL=OFF \
 	%{cmake_on_off optical_drive ENABLE_OPTICAL} \
@@ -330,9 +331,6 @@ install -d $RPM_BUILD_ROOT%{_libdir}/%{name}/addons
 # not packaged
 %{__rm} $RPM_BUILD_ROOT%{_prefix}/lib/firewalld/services/kodi-*.xml
 
-# same as kodi-TexturePacker
-%{__rm} $RPM_BUILD_ROOT%{_bindir}/TexturePacker
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -353,6 +351,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/%{name}/addons
 %{_datadir}/%{name}/media
 %{_datadir}/%{name}/privacy-policy.txt
+%{_datadir}/%{name}/python-stubs
 %{_datadir}/%{name}/system
 %{_datadir}/%{name}/userdata
 %attr(755,root,root) %{_libdir}/%{name}/%{name}.bin
