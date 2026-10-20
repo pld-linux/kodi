@@ -58,13 +58,14 @@
 %{?use_default_jdk}
 
 %define		_rc	rc1
+%define		rel	2
 
 %define		codename	Piers
 Summary:	Kodi - a free and open source media-player and entertainment hub
 Summary(pl.UTF-8):	Kodi - wolnodostępny, mający otwarte źródła odtwarzacz multimediów i hub rozrywkowy
 Name:		kodi
 Version:	22.0
-Release:	0.%{_rc}.1
+Release:	0.%{_rc}.%{rel}
 License:	GPL v2+ and GPL v3+
 Group:		Applications/Multimedia
 #Source0Download: https://github.com/xbmc/xbmc/releases
