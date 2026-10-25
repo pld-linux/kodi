@@ -58,7 +58,7 @@
 %{?use_default_jdk}
 
 %define		_rc	rc1
-%define		rel	2
+%define		rel	3
 
 %define		codename	Piers
 Summary:	Kodi - a free and open source media-player and entertainment hub
