@@ -57,8 +57,8 @@
 
 %{?use_default_jdk}
 
-%define		_rc	rc1
-%define		rel	3
+%define		_rc	rc2
+%define		rel	1
 
 %define		codename	Piers
 Summary:	Kodi - a free and open source media-player and entertainment hub
@@ -70,14 +70,13 @@ License:	GPL v2+ and GPL v3+
 Group:		Applications/Multimedia
 #Source0Download: https://github.com/xbmc/xbmc/releases
 Source0:	https://github.com/xbmc/xbmc/archive/%{version}%{_rc}-%{codename}/%{version}%{_rc}-%{codename}.tar.gz
-# Source0-md5:	bf004b52aca3ad160249e02717977c40
+# Source0-md5:	c09fe018b7914aaff31e170cd1e76e31
 Source1:	https://mirrors.kodi.tv/build-deps/sources/libdvdread-%{dvdread_ver}.tar.bz2
 # Source1-md5:	120e9ead9f59e2031d05e6a61ffea8ec
 Source2:	https://mirrors.kodi.tv/build-deps/sources/libdvdcss-%{dvdcss_ver}.tar.bz2
 # Source2-md5:	5ff8b0240506b96d04f1a0cf04ab77d1
 Source3:	https://mirrors.kodi.tv/build-deps/sources/libdvdnav-%{dvdnav_ver}.tar.bz2
 # Source3-md5:	a0f4805cd9bb44fd635378b5c0447623
-Patch0:		ffmpeg7.patch
 URL:		https://kodi.tv/
 BuildRequires:	EGL-devel
 %{?with_gbm:BuildRequires:	Mesa-libgbm-devel}
@@ -260,7 +259,6 @@ Pliki nagłówkowe Kodi.
 
 %prep
 %setup -q -n xbmc-%{version}%{_rc}-%{codename}
-%patch -P0 -p1
 
 %if %{without system_ffmpeg}
 #ln -s %{SOURCE1} tools/depends/target/ffmpeg/ffmpeg-2.4.4-%{codename}.tar.gz
